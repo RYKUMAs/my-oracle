@@ -1,66 +1,115 @@
 ---
 name: pipeline
-description: รัน multi-agent pipeline สำหรับงานซับซ้อน (v2.1)
+description: รัน multi-agent pipeline พร้อม Deep Research + Plan & Confirm (v3.0)
 ---
 
-# Pipeline Skill
+# Pipeline Skill v3.0
 
-## คำแนะนำ (Instructions)
-เรียก agents หลายตัวตามลำดับที่เหมาะสมกับประเภทงาน
+## 🎯 New Workflow: Research → Plan → Confirm → Build
 
-## Pipeline Types (v2.1)
-
-### 1. Production Pipeline (ใหม่!)
 ```
-Researcher → Architect → Engineer → Reviewer → Tester → Documenter
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  DEEP       │ →  │   PLAN      │ →  │  CONFIRM    │ →  │   BUILD     │
+│  RESEARCH   │    │   & SHOW    │    │  (ASK USER) │    │  (execute)  │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
 ```
-ใช้สำหรับ: Production release, deployment, งานเต็มรูปแบบ
 
-**Keywords:** production, release, deploy, เอาขึ้น
+## Pipeline Types (v3.0)
 
-### 2. Research Pipeline (ใหม่!)
+### 1. New Project Pipeline (NEW!)
 ```
-Researcher → Architect
+Researcher (Deep) → Planner → [WAIT FOR CONFIRM] → Architect → Engineer → Reviewer → Tester → Documenter
 ```
-ใช้สำหรับ: วิจัยเทคโนโลยี, เปรียบเทียบ tools
+ใช้สำหรับ: **โปรเจกต์ใหม่ที่ต้องการ study ลึก**
 
-**Keywords:** research, วิจัย, เปรียบเทียบ, vs
+**Flow:**
+1. 🔍 **Deep Research** — ศึกษาลึก 3-5 เท่า
+2. 📋 **Plan** — วางแผนพร้อม timeline
+3. ⏸️ **CONFIRM** — **แจ้งคุณดู plan → รอ YES**
+4. เมื่อคุณตอบ YES → เริ่ม implement
 
-### 3. Full Development Pipeline (อัปเกรด)
+**Keywords:** `โปรเจกต์ใหม่`, `ใหม่`, `new project`
+
+### 2. Research Pipeline (อัปเกรด)
+```
+Researcher (Deep) → Architect
+```
+ใช้สำหรับ: วิจัยเทคโนโลยีลึกๆ
+
+**Keywords:** `research`, `วิจัย`, `เปรียบเทียบ`, `vs`, `--deep`
+
+### 3. Production Pipeline
+```
+Architect → Engineer → Reviewer → Tester → Documenter
+```
+ใช้สำหรับ: Production release
+
+### 4. Full Development Pipeline
 ```
 Architect → Engineer → Reviewer → Tester
 ```
-ใช้สำหรับ: feature ใหม่, งานที่ต้องออกแบบ
+ใช้สำหรับ: Feature ใหม่
 
-**Keywords:** design, architecture, system, feature
-
-### 4. Bug Fix Pipeline
+### 5. Bug Fix Pipeline
 ```
 Debugger → Tester
 ```
-ใช้สำหรับ: แก้ bug, error, crash
 
-**Keywords:** bug, error, fix, crash
-
-### 5. Quick Implementation
+### 6. Quick Pipeline
 ```
 Engineer → Tester
 ```
-ใช้สำหรับ: small fix, simple feature
 
-## ขั้นตอน
-1. วิเคราะห์ประเภทงาน
-2. เลือก pipeline ที่เหมาะสม
-3. เรียก agents ตามลำดับ
-4. ส่ง output จาก agent ก่อน → input ของ agent ถัดไป
-5. รวมผลและบันทึกลง Memory
+## 📋 ตัวอย่าง Flow สำหรับโปรเจกต์ใหม่
 
-## Output
-- สรุปผลจากทุก agent
-- Handoff data สำหรับ session ถัดไป
-- Memory update
+```
+User: /pipeline สร้างระบบ face recognition
 
-## New Agents (v2.1)
-- **Researcher** 🔍 — วิจัยเทคโนโลยี
-- **Reviewer** 👀 — Code review
-- **Documenter** 📚 — สร้าง docs
+Oracle: 🔍 เริ่ม Deep Research...
+        └─ ค้นหา tech options...
+        └─ เปรียบเทียบ performance, cost, risk...
+        └─ แนะนำ: K230 + MicroPython
+
+        📋 สร้าง Plan...
+        └─ Phase 1: Setup (1-2 days)
+        └─ Phase 2: Core (1 week)
+        └─ Phase 3: Test (2-3 days)
+        └─ Total: ~2 weeks
+
+        ⏸️  รอการยืนยัน...
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        📋 PLAN SUMMARY
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        Project: Face Recognition System
+        Tech: K230 + MicroPython
+        Timeline: 2 weeks
+
+        Phases:
+        1. Setup (1-2 days)
+        2. Core (1 week)
+        3. Test (2-3 days)
+
+        Risks: Low complexity, proven tech
+
+        ❓ ตกลงไหม? พิมพ์ YES เพื่อเริ่ม
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+User: YES
+
+Oracle: ✅ เริ่ม implement!
+        🏗️ Architect...
+        🔧 Engineer...
+        👀 Reviewer...
+        ✅ Tester...
+        📚 Documenter...
+```
+
+## Usage
+
+```
+/pipeline [task]                    → auto-detect
+/pipeline โปรเจกต์ใหม่ [ชื่อ]      → new project flow
+/researcher [query] --deep          → deep research
+/planner [task]                     → plan only
+```
