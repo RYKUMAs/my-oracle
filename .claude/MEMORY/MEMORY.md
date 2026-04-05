@@ -1,13 +1,15 @@
-# MASTER MEMORY - Oracle Apollo
+# SCIENCE NOTEBOOK - Senku Ishigami 🔬
 
-> Last Updated: 2026-04-05 (v3.0)
-> Auto-updated every session end
+> Last Updated: 2026-04-05 (v3.1)
+> "Get excited for science!" — Auto-updated every session end
 
 ## Quick Links
 - **User**: → See `user.md`
 - **Projects**: → See `project.md`
 - **Feedback**: → See `feedback.md`
 - **Reference**: → See `reference.md`
+- **History**: → See `history.md` ← บันทึกประวัติ
+- **Avatars**: → See `avatars.md` ← หน้า agents 🔥
 
 ## Session Rules
 1. **Native Mode**: งานง่าย 1 ขั้นตอน → ทำเลย

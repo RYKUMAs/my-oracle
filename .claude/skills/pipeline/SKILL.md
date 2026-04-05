@@ -1,9 +1,9 @@
 ---
 name: pipeline
-description: รัน multi-agent pipeline พร้อม Deep Research + Plan & Confirm (v3.0)
+description: รัน multi-agent pipeline พร้อม Deep Research + Plan & Confirm + Developer (v3.2)
 ---
 
-# Pipeline Skill v3.0
+# Pipeline Skill v3.2
 
 ## 🎯 New Workflow: Research → Plan → Confirm → Build
 
@@ -14,102 +14,45 @@ description: รัน multi-agent pipeline พร้อม Deep Research + Plan
 └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
 ```
 
-## Pipeline Types (v3.0)
+## Pipeline Types (v3.2)
 
-### 1. New Project Pipeline (NEW!)
+### 1. New Project (NEW!)
 ```
-Researcher (Deep) → Planner → [WAIT FOR CONFIRM] → Architect → Engineer → Reviewer → Tester → Documenter
+Researcher (Deep) → Planner → [WAIT FOR CONFIRM] → Architect → Engineer → Developer → Reviewer → Tester → Documenter
 ```
-ใช้สำหรับ: **โปรเจกต์ใหม่ที่ต้องการ study ลึก**
 
-**Flow:**
-1. 🔍 **Deep Research** — ศึกษาลึก 3-5 เท่า
-2. 📋 **Plan** — วางแผนพร้อม timeline
-3. ⏸️ **CONFIRM** — **แจ้งคุณดู plan → รอ YES**
-4. เมื่อคุณตอบ YES → เริ่ม implement
-
-**Keywords:** `โปรเจกต์ใหม่`, `ใหม่`, `new project`
-
-### 2. Research Pipeline (อัปเกรด)
+### 2. Production
 ```
-Researcher (Deep) → Architect
+Architect → Engineer → Developer → Reviewer → Tester → Documenter
 ```
-ใช้สำหรับ: วิจัยเทคโนโลยีลึกๆ
 
-**Keywords:** `research`, `วิจัย`, `เปรียบเทียบ`, `vs`, `--deep`
+### 3. Full Development
+```
+Architect → Engineer → Developer → Reviewer → Tester
+```
 
-### 3. Production Pipeline
-```
-Architect → Engineer → Reviewer → Tester → Documenter
-```
-ใช้สำหรับ: Production release
-
-### 4. Full Development Pipeline
-```
-Architect → Engineer → Reviewer → Tester
-```
-ใช้สำหรับ: Feature ใหม่
-
-### 5. Bug Fix Pipeline
+### 4. Bug Fix
 ```
 Debugger → Tester
 ```
 
-### 6. Quick Pipeline
+### 5. Quick
 ```
-Engineer → Tester
-```
-
-## 📋 ตัวอย่าง Flow สำหรับโปรเจกต์ใหม่
-
-```
-User: /pipeline สร้างระบบ face recognition
-
-Oracle: 🔍 เริ่ม Deep Research...
-        └─ ค้นหา tech options...
-        └─ เปรียบเทียบ performance, cost, risk...
-        └─ แนะนำ: K230 + MicroPython
-
-        📋 สร้าง Plan...
-        └─ Phase 1: Setup (1-2 days)
-        └─ Phase 2: Core (1 week)
-        └─ Phase 3: Test (2-3 days)
-        └─ Total: ~2 weeks
-
-        ⏸️  รอการยืนยัน...
-
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        📋 PLAN SUMMARY
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        Project: Face Recognition System
-        Tech: K230 + MicroPython
-        Timeline: 2 weeks
-
-        Phases:
-        1. Setup (1-2 days)
-        2. Core (1 week)
-        3. Test (2-3 days)
-
-        Risks: Low complexity, proven tech
-
-        ❓ ตกลงไหม? พิมพ์ YES เพื่อเริ่ม
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-User: YES
-
-Oracle: ✅ เริ่ม implement!
-        🏗️ Architect...
-        🔧 Engineer...
-        👀 Reviewer...
-        ✅ Tester...
-        📚 Documenter...
+Engineer → Developer → Tester
 ```
 
-## Usage
+## สายการทำงานทั้งหมด (New)
 
 ```
-/pipeline [task]                    → auto-detect
-/pipeline โปรเจกต์ใหม่ [ชื่อ]      → new project flow
-/researcher [query] --deep          → deep research
-/planner [task]                     → plan only
+Architect (ออกแบบ)
+    ↓
+Engineer (วางแผน)
+    ↓
+Developer (เขียนโค้ดจริง) ← เพิ่มใน v3.2
+    ↓
+Reviewer (ตรวจ)
+    ↓
+Tester (ทดสอบ)
+    ↓
+Documenter (เขียน docs)
 ```

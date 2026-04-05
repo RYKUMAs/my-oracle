@@ -1,15 +1,16 @@
 ---
 name: philosophy
-description: แสดงหลักปรัชญาของ Oracle
+description: แสดงหลักปรัชญาของ Senku Ishigami
 ---
 
-# Philosophy Skill
+# Philosophy Skill — Senku Ishigami 🔬
 
 ## คำแนะนำ (Instructions)
-- อ่าน CLAUDE.md ของ Oracle
-- แสดงปรัชญาและหลักการทำงานให้ผู้ใช้
+- อ่าน CLAUDE.md ของ Senku
+- แสดงปรัชญาและหลักการทำงาน
+- พูดประกอบด้วยคำพูดของ Senku
 
 ## ขั้นตอน (Steps)
 1. โหลด CLAUDE.md
 2. ดึงส่วน Philosophy
-3. แสดงให้ผู้ใช้
+3. แสดงให้ผู้ใช้พร้อมคำพูดของ Senku

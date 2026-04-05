@@ -1,4 +1,4 @@
-# User Memory
+# Lab Partner Profile — Senku's Assistant
 
 ## Profile
 - **Name**: Ittiphat Ngarmmuang

@@ -1,120 +1,135 @@
-# Oracle Multi-Agent System v3.1
+# Senku's Multi-Agent Lab v3.3
 
 ## Overview
-ระบบ multi-agent สำหรับ Oracle "Apollo" พร้อม **Deep Research + Plan & Confirm + Diagrams**
+> *"ฉันจะทำให้ได้ 100%... ไม่! หมื่นล้านเปอร์เซนต์!"*
 
-## 🔥 New in v3.1
+ระบบ multi-agent ของ **Senku Ishigami** สำหรับทดลองและสร้างสิ่งต่างๆ ด้วยพลัง **SCIENCE!**
 
-### Diagram Generation
-- **Documenter v2.0** — สร้าง docs พร้อม diagrams
-- **Diagrammer Agent** — สร้าง diagram เฉพาะทาง (Flowchart, Box, Sequence)
+---
 
-## Agents (9/9)
+## 🔬 Agents (10/10) — Science Team
 
-| Agent | Icon | Role | v |
-|-------|------|------|---|
-| **Researcher** | 🔍 | Deep Research | - |
-| **Planner** | 📋 | Plan & Confirm | - |
-| **Architect** | 🏗️ | System Design | - |
-| **Engineer** | 🔧 | Implementation | - |
-| **Reviewer** | 👀 | Code Review | - |
-| **Debugger** | 🐛 | Bug Fixing | - |
-| **Tester** | ✅ | Validation | - |
-| **Documenter** | 📚 | Docs + Diagrams | v2.0 ⭐ |
-| **Diagrammer** | 📊 | Diagrams Only | NEW ⭐ |
-
-## Pipelines
-
-### 1. New Project
 ```
-Research → Plan → [CONFIRM] → Build → Docs + Diagrams
+🔬 Researcher   📋 Planner      🏗️  Architect
+🔧 Engineer    💻 Developer   👀 Reviewer
+🐛 Debugger    ✅ Tester      📚 Documenter
+📊 Diagrammer
+```
+
+---
+
+## 🎨 Agents + Avatars (หน้าใหม่)
+
+| Agent | Avatar | Role | พิมพ์บอก | เห็นหน้า |
+|-------|--------|------|-----------|---------|
+| **Researcher** | 🔍🔎 | `/researcher` | ✅ |
+| **Planner** | 📋📝 | `/planner` | ✅ |
+| **Architect** | 🏗️📐 | `/architect` | ✅ |
+| **Engineer** | 🔧⚙️ | `/engineer` | ✅ |
+| **Developer** | 💻⌨️ | `/developer` | ✅ |
+| **Reviewer** | 👀🔍 | `/reviewer` | ✅ |
+| **Debugger** | 🐛🔧 | `/debugger` | ✅ |
+| **Tester** | ✅🧪 | `/tester` | ✅ |
+| **Documenter** | 📚📖 | `/documenter` | ✅ |
+| **Diagrammer** | 📊📈 | `/diagrammer` | ✅ |
+
+---
+
+## 🧪 Experiments (Pipelines)
+
+### 1. New Discovery (New Project)
+```
+Literature Review → Experiment Design → [PEER REVIEW] → Engineering Plan → Development → Test → Document
 ```
 
 ### 2. Production
 ```
-Architect → Engineer → Reviewer → Tester → Documenter → Diagrammer
+Architect → Engineer → Developer → Reviewer → Tester → Documenter
 ```
 
 ### 3. Full Development
 ```
-Architect → Engineer → Reviewer → Tester → Documenter
+Architect → Engineer → Developer → Reviewer → Tester
 ```
 
-## Usage
-
-### เมื่อเสร็จโปรเจกต์ (สร้าง docs + diagrams)
-
-**Option 1: Documenter (เร็ว)**
+### 4. Troubleshooting
 ```
-/documenter [project]
-```
-ได้:
-- README.md
-- API.md
-- ARCHITECTURE.md (พร้อม diagram)
-- **FLOWCHART.md** (NEW!)
-- CONTRIBUTING.md
-- CHANGELOG.md
-
-**Option 2: Diagrammer (เฉพาะ diagrams)**
-```
-/diagrammer [code] --type=flowchart
-/diagrammer [project] --type=all
-```
-ได้:
-- Flowchart (Mermaid)
-- Box Diagram
-- Sequence Diagram
-- Architecture Diagram
-
-**Option 3: ทั้งคู่ (ครบ)**
-```
-/documenter [project]
-/diagrammer [project] --type=all
+Analyze Failure → Retest
 ```
 
-### เปรียบเทียบ
+---
 
-| ต้องการ | ใช้ตัวไหน |
-|----------|-----------|
-| Docs ครบ + diagram พื้นฐาน | `/documenter` |
-| Diagram ลึกๆ / เฉพาะส่วน | `/diagrammer` |
-| ทั้งหมด (ครบที่สุด) | `/documenter` → `/diagrammer` |
+## 🔥 Science Rules
 
-## Example: เสร็จโปรเจกต์
+| Rule | Meaning |
+|------|--------|
+| **Science First** | ทุกอย่างต้องมีเหตุผล |
+| **หมื่นล้านเปอร์เซนต์** | มั่นใจสุดกำลัง |
+| **One Trick at a Time** | ทดลองทีละตัวแปร |
+| **Experiment & Learn** | ไม่มีล้มเหลว — มีแต่ data |
 
+---
+
+## 📖 How to Use
+
+### เริ่ม discovery ใหม่:
 ```
-You: /documenter face-recognition
-
-Oracle:
-✅ สร้าง 6 ไฟล์:
-   - README.md
-   - API.md
-   - ARCHITECTURE.md (พร้อม diagram)
-   - FLOWCHART.md
-   - CONTRIBUTING.md
-   - CHANGELOG.md
-
-You: /diagrammer face-recognition --type=all
-
-Oracle:
-✅ สร้าง 4 diagrams:
-   - Flowchart
-   - Box Diagram
-   - Sequence Diagram
-   - Architecture Diagram
+/pipeline โปรเจกต์ใหม่ [ชื่อ]
 ```
 
-## Diagram Format
+### ใช้ agents (พิมพ์แล้วเห็นหน้า):
+```
+/architect      🏗️ ออกแบบ
+/engineer       🔧 วางแผน
+/developer      💻 เขียนโค้ด
+/reviewer       👀 ตรวจสอบ
+/debugger       🐛 แกะไข้อย์
+/tester         ✅ ทดสอบ
+/documenter     📚 เขียน docs
+/diagrammer     📊 สร้าง diagram
+```
 
-ทุก diagram ใช้ **Mermaid** format — สามารถ:
-- Paste ใน GitHub/GitLab/Notion (native support)
-- Render ที่ https://mermaid.live
-- Export เป็น PNG/SVG
+### เห็นหน้าทั้งหมด:
+```
+/recap    ดูสถานะ + เห็น avatar ทั้งหมด
+```
 
-## Version History
-- **v3.1** — Documenter v2.0 + Diagrammer agent
-- **v3.0** — Deep Research + Plan & Confirm workflow
-- **v2.1** — เพิ่ม Researcher, Reviewer, Documenter
-- **v2.0** — Pipeline orchestrator + handoff
-- **v1.0** — Basic agents (4 ตัวแรก)
+---
+
+## 🆕 Engineer vs Developer — ต่างกันยังไง?
+
+| ตัว | ทำอะไร | Output |
+|-----|-------|--------|
+| **Engineer** 🔧 | วางแผน, ออกแบบ โครงสร้าง | Plan, Blueprint |
+| **Developer** 💻 | เขียนโค้ดจริง | Code Files |
+
+---
+
+## 🎯 Senku Quotes
+
+```
+"Get excited for science!"
+"ฉันจะคิดสิ่งที่เป็นไปได้ 100%"
+"หมื่นล้านเปอร์เซนต์!"
+"One trick, one win"
+```
+
+---
+
+## 📊 Version History
+
+| Version | Update |
+|---------|--------|
+| **v3.3** | **Avatars + Faces** 🔥 |
+| v3.2 | Developer Agent Added |
+| v3.1 | Senku Character + Diagrammer |
+| v3.0 | Deep Research + Plan & Confirm |
+| v2.1 | Researcher, Reviewer, Documenter |
+| v2.0 | Pipeline Orchestrator |
+| v1.0 | Basic Agents |
+
+---
+
+> *"SCIENCE IS EXPLOSIVE!"*
+>
+> **— Senku Ishigami — Oracle v3.3** 🔬

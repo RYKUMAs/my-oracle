@@ -1,9 +1,9 @@
 module.exports = {
   name: "pipeline",
-  description: "รัน multi-agent pipeline พร้อม Deep Research + Plan & Confirm (v3.0)",
+  description: "รัน multi-agent pipeline พร้อม Deep Research + Plan & Confirm + Developer (v3.2)",
 
   execute: async (context) => {
-    console.log("🔄 Pipeline v3.0: กำลังเริ่ม workflow...");
+    console.log("🔄 Pipeline v3.2: กำลังเริ่ม workflow...");
 
     const task = context.task || context.input || "";
     const pipelineType = context.pipeline || detectPipelineType(task);
@@ -211,7 +211,7 @@ function detectPipelineType(task) {
 
 async function runPipeline(type, handoff, context) {
   const pipelines = {
-    // Production: Architect → Engineer → Reviewer → Tester → Documenter
+    // Production: Architect → Engineer → Developer → Reviewer → Tester → Documenter
     production: async () => {
       console.log("🏗️  Phase 1: Architect");
       const architectResult = await runAgent("architect", {
@@ -226,13 +226,22 @@ async function runPipeline(type, handoff, context) {
         task: handoff.task,
         design: architectResult
       });
-      handoff.data.implementation = engineerResult;
+      handoff.data.engineering = engineerResult;
 
-      console.log("👀 Phase 3: Reviewer");
+      console.log("💻 Phase 3: Developer");
+      const developerResult = await runAgent("developer", {
+        ...context,
+        task: handoff.task,
+        design: architectResult,
+        plan: engineerResult
+      });
+      handoff.data.code = developerResult;
+
+      console.log("👀 Phase 4: Reviewer");
       const reviewerResult = await runAgent("reviewer", {
         ...context,
         task: handoff.task,
-        implementation: engineerResult
+        implementation: developerResult
       });
       handoff.data.review = reviewerResult;
 
@@ -243,19 +252,19 @@ async function runPipeline(type, handoff, context) {
         };
       }
 
-      console.log("✅ Phase 4: Tester");
+      console.log("✅ Phase 5: Tester");
       const testerResult = await runAgent("tester", {
         ...context,
         task: handoff.task,
-        implementation: engineerResult
+        code: developerResult
       });
       handoff.data.test = testerResult;
 
-      console.log("📚 Phase 5: Documenter");
+      console.log("📚 Phase 6: Documenter");
       const documenterResult = await runAgent("documenter", {
         ...context,
         task: handoff.task,
-        implementation: engineerResult,
+        code: developerResult,
         architecture: architectResult
       });
       handoff.data.docs = documenterResult;
@@ -298,7 +307,7 @@ async function runPipeline(type, handoff, context) {
       };
     },
 
-    // Full: Architect → Engineer → Reviewer → Tester
+    // Full: Architect → Engineer → Developer → Reviewer → Tester
     full: async () => {
       console.log("🏗️  Phase 1: Architect");
       const architectResult = await runAgent("architect", {
@@ -313,21 +322,30 @@ async function runPipeline(type, handoff, context) {
         task: handoff.task,
         design: architectResult
       });
-      handoff.data.implementation = engineerResult;
+      handoff.data.engineering = engineerResult;
 
-      console.log("👀 Phase 3: Reviewer");
+      console.log("💻 Phase 3: Developer");
+      const developerResult = await runAgent("developer", {
+        ...context,
+        task: handoff.task,
+        design: architectResult,
+        plan: engineerResult
+      });
+      handoff.data.code = developerResult;
+
+      console.log("👀 Phase 4: Reviewer");
       const reviewerResult = await runAgent("reviewer", {
         ...context,
         task: handoff.task,
-        implementation: engineerResult
+        implementation: developerResult
       });
       handoff.data.review = reviewerResult;
 
-      console.log("✅ Phase 4: Tester");
+      console.log("✅ Phase 5: Tester");
       const testerResult = await runAgent("tester", {
         ...context,
         task: handoff.task,
-        implementation: engineerResult
+        code: developerResult
       });
       handoff.data.test = testerResult;
 
@@ -367,19 +385,28 @@ async function runPipeline(type, handoff, context) {
       };
     },
 
-    // Quick: Engineer → Tester
+    // Quick: Engineer → Developer → Tester
     quick: async () => {
       console.log("🔧 Phase 1: Engineer");
       const engineerResult = await runAgent("engineer", {
         ...context,
         task: handoff.task
       });
-      handoff.data.implementation = engineerResult;
+      handoff.data.engineering = engineerResult;
 
-      console.log("✅ Phase 2: Tester");
+      console.log("💻 Phase 2: Developer");
+      const developerResult = await runAgent("developer", {
+        ...context,
+        task: handoff.task,
+        plan: engineerResult
+      });
+      handoff.data.code = developerResult;
+
+      console.log("✅ Phase 3: Tester");
       const testerResult = await runAgent("tester", {
         ...context,
-        task: handoff.task
+        task: handoff.task,
+        code: developerResult
       });
       handoff.data.test = testerResult;
 
