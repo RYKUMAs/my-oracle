@@ -7,7 +7,7 @@
 - **Goal**: AI Oracle system for development assistance
 - **Branch**: main
 - **Last Updated**: 2026-04-05
-- **Pipeline**: v2.0 — Multi-agent with handoff ✅
+- **Pipeline**: v2.1 — 7 Agents with full workflow ✅
 
 ### micropython-dev (K230 Face Recognition)
 - **Status**: In Progress

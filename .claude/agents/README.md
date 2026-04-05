@@ -1,39 +1,51 @@
-# Oracle Multi-Agent System v2.0
+# Oracle Multi-Agent System v2.1
 
 ## Overview
-ระบบ multi-agent สำหรับ Oracle "Apollo" พร้อม handoff mechanism และ pipeline orchestration
+ระบบ multi-agent สำหรับ Oracle "Apollo" พร้อม handoff mechanism, pipeline orchestration และ agents ใหม่
 
-## Agents (4/4)
+## Agents (7/7)
 
-| Agent | Role | Input | Output |
-|-------|------|-------|--------|
-| **Architect** | System Design | Task/Requirements | Architecture plan, file structure, APIs |
-| **Engineer** | Implementation | Design/Task | Code, files, dependencies |
-| **Debugger** | Bug Fixing | Error/Logs | Root cause, solutions, prevention |
-| **Tester** | Validation | Code/Implementation | Test report, coverage, bugs |
+| Agent | Role | Icon | Input | Output |
+|-------|------|------|-------|--------|
+| **Researcher** 🔍 | วิจัยเทคโนโลยี | Research query | Tech comparison, recommendations |
+| **Architect** 🏗️ | System Design | Task/Requirements | Architecture plan, APIs |
+| **Engineer** 🔧 | Implementation | Design/Task | Code, files, dependencies |
+| **Reviewer** 👀 | Code Review | Implementation | Score, issues, approval |
+| **Debugger** 🐛 | Bug Fixing | Error/Logs | Root cause, solutions |
+| **Tester** ✅ | Validation | Code/Implementation | Test report, bugs |
+| **Documenter** 📚 | Documentation | Code/Architecture | README, API docs |
 
 ## Pipelines
 
-### 1. Full Development Pipeline
+### 1. Production Pipeline (NEW!)
 ```
-Architect → Engineer → Tester
+Researcher → Architect → Engineer → Reviewer → Tester → Documenter
 ```
-ใช้สำหรับ: Feature ใหม่, งานที่ต้องออกแบบ
+ใช้สำหรับ: Production release, deployment
 
-**Handoff:**
-- Architect → ส่ง design → Engineer
-- Engineer → ส่ง implementation → Tester
+**Keywords:** `production`, `release`, `deploy`, `เอาขึ้น`
 
-### 2. Bug Fix Pipeline
+### 2. Research Pipeline (NEW!)
+```
+Researcher → Architect
+```
+ใช้สำหรับ: วิจัยเทคโนโลยี, เปรียบเทียบ
+
+**Keywords:** `research`, `วิจัย`, `เปรียบเทียบ`, `vs`
+
+### 3. Full Development Pipeline
+```
+Architect → Engineer → Reviewer → Tester
+```
+ใช้สำหรับ: Feature ใหม่, งานซับซ้อน
+
+### 4. Bug Fix Pipeline
 ```
 Debugger → Tester
 ```
 ใช้สำหรับ: Bug, error, crash
 
-**Handoff:**
-- Debugger → ส่ง fix plan → Tester (regression tests)
-
-### 3. Quick Pipeline
+### 5. Quick Pipeline
 ```
 Engineer → Tester
 ```
@@ -41,64 +53,74 @@ Engineer → Tester
 
 ## Usage
 
-### เรียก agent เดียว
-```
-/engineer สร้าง API สำหรับ login
-```
-
 ### เรียก pipeline (แนะนำ)
 ```
-/pipeline สร้างระบบ notification
-```
-ระบบจะ auto-detect และเลือก pipeline ที่เหมาะสม
-
-### เรียก pipeline แบบระบุ
-```
-/pipeline แก้บั๊ก login ไม่ได้ --type=bugfix
+/pipeline สร้าง face recognition API
+/pipeline release เอาขึ้น production
+/pipeline วิจัย React vs Vue
+/pipeline แก้บั๊ก login
 ```
 
-## Implementation Details
-
-### Handoff Data Structure
-```javascript
-{
-  task: "original task",
-  pipeline_type: "full|bugfix|quick",
-  timestamp: "ISO string",
-  data: {
-    architecture: { /* Architect output */ },
-    implementation: { /* Engineer output */ },
-    test: { /* Tester output */ }
-  }
-}
+### เรียก agent เดี่ยว
+```
+/researcher แนะนำ framework สำหรับ real-time
+/architect วาง design ระบบ notification
+/engineer implement ตาม design
+/reviewer รีวิวโค้ด PR #123
+/documenter สร้าง docs สำหรับ project
 ```
 
-### Memory Integration
-ทุก agent บันทึก output ลง `.claude/MEMORY/`:
-- `architecture.md` — Architect outputs
-- `implementation.md` — Engineer outputs
-- `debug.md` — Debugger outputs
-- `test.md` — Tester outputs
-
-## Workflow Example
+## Architecture
 
 ```
-User: /pipeline สร้าง face recognition API
-
-Pipeline: 📋 Type = full (complex task)
-
-🏗️  Architect: Designing...
-  → Pattern: REST API + Service Layer
-  → Components: [Camera, FaceDetect, FaceRecognize, MQTT]
-
-🔧 Engineer: Implementing...
-  → Files: 8 generated
-  → Dependencies: 5 identified
-
-✅ Tester: Validating...
-  → Coverage: 85%
-  → Status: APPROVED
-
-✅ Pipeline complete
-  → Recommendations: ["Ready to deploy"]
+                    ┌──────────────────────────────────┐
+                    │     PIPELINE ORCHESTRATOR v2.1    │
+                    │  (auto-detect + route agents)     │
+                    └──────────────────────────────────┘
+                                 │
+         ┌───────────┬───────────┼───────────┬───────────┐
+         ▼           ▼           ▼           ▼           ▼
+    ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+    │Research │ │Architect│ │Engineer │ │Reviewer │ │Document │
+    │   er    │ │         │ │         │ │         │ │   er    │
+    └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘
+         │           │           │           │           │
+         └───────────┴───────────┴───────────┴───────────┘
+                                 │
+         ┌───────────┬───────────┼───────────┬───────────┐
+         ▼           ▼           ▼           ▼           ▼
+    ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+    │Debugger │ │ Tester  │ │  MEMORY │ │ HANDOFF │ │REPORT   │
+    └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘
 ```
+
+## Example Workflows
+
+### Production Release
+```
+/pipeline release face recognition system
+
+🔍 Researcher: ค้นความต้องการเทคโนโลยี
+🏗️  Architect: ออกแบบ pipeline
+🔧 Engineer: Implement
+👀 Reviewer: Review (8/10) ✅
+✅ Tester: Tests passed
+📚 Documenter: สร้าง 5 ไฟล์ docs
+
+✅ Ready to deploy!
+```
+
+### Quick Bug Fix
+```
+/pipeline แก้บั๊ก login crash
+
+🐛 Debugger: พบ null pointer exception
+✅ Tester: Regression tests passed
+
+✅ Fix applied!
+```
+
+## Version History
+- **v2.1** — เพิ่ม Researcher, Reviewer, Documenter
+- **v2.0** — Pipeline orchestrator + handoff
+- **v1.0** — Basic agents (4 ตัวแรก)
