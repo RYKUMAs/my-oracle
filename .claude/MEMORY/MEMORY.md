@@ -1,19 +1,21 @@
-# MASTER MEMORY
+# MASTER MEMORY - Oracle Apollo
 
-## User
-- name: Ittiphat Ngarmmuang
-- role: Developer
-- goals: Build Oracle system, Learn micropython automation
+> Last Updated: 2026-04-05
+> Auto-updated every session end
 
-## Feedback
-- /learn skill: สำรวจ codebase ได้ดี
-- /dig skill: ปรับ output ให้สรุปง่าย
+## Quick Links
+- **User**: → See `user.md`
+- **Projects**: → See `project.md`
+- **Feedback**: → See `feedback.md`
+- **Reference**: → See `reference.md`
 
-## Project
-- my-oracle: initial setup complete
-- micropython-dev: in progress
+## Session Rules
+1. **Native Mode**: งานง่าย 1 ขั้นตอน → ทำเลย
+2. **Algorithm Mode**: งานซับซ้อน → OBSERVE → THINK → PLAN → BUILD → EXECUTE → VERIFY → LEARN
+3. **Surgical Fixes**: แก้เฉพาะจุด ไม่ลบทั้งหมด
+4. **Never Assert Without Verification**: ตรวจสอบก่อนบอกว่าเสร็จ
 
-## Reference
-- Claude Guide
-- Multi-agent Docs
-- Micropython Docs
+## Latest Updates
+- ✅ Auto-memory system setup complete
+- ✅ Multi-agent pipeline tested (120ms latency)
+- ✅ K230 face recognition implementation passed

@@ -1,40 +1,104 @@
-# Oracle Agents
+# Oracle Multi-Agent System v2.0
 
 ## Overview
-Multi-agent system สำหรับ Oracle "Apollo" แต่ละตัวมีบทบาทเฉพาะ
+ระบบ multi-agent สำหรับ Oracle "Apollo" พร้อม handoff mechanism และ pipeline orchestration
 
 ## Agents (4/4)
 
-| Agent | Role | Command |
-|-------|------|---------|
-| **Architect** | System Design & Architecture | `/architect` |
-| **Engineer** | Implementation & Coding | `/engineer` |
-| **Debugger** | Bug Fixing & Troubleshooting | `/debugger` |
-| **Tester** | Testing & Validation | `/tester` |
+| Agent | Role | Input | Output |
+|-------|------|-------|--------|
+| **Architect** | System Design | Task/Requirements | Architecture plan, file structure, APIs |
+| **Engineer** | Implementation | Design/Task | Code, files, dependencies |
+| **Debugger** | Bug Fixing | Error/Logs | Root cause, solutions, prevention |
+| **Tester** | Validation | Code/Implementation | Test report, coverage, bugs |
 
-## การใช้งาน
+## Pipelines
+
+### 1. Full Development Pipeline
+```
+Architect → Engineer → Tester
+```
+ใช้สำหรับ: Feature ใหม่, งานที่ต้องออกแบบ
+
+**Handoff:**
+- Architect → ส่ง design → Engineer
+- Engineer → ส่ง implementation → Tester
+
+### 2. Bug Fix Pipeline
+```
+Debugger → Tester
+```
+ใช้สำหรับ: Bug, error, crash
+
+**Handoff:**
+- Debugger → ส่ง fix plan → Tester (regression tests)
+
+### 3. Quick Pipeline
+```
+Engineer → Tester
+```
+ใช้สำหรับ: Small fix, simple task
+
+## Usage
 
 ### เรียก agent เดียว
 ```
 /engineer สร้าง API สำหรับ login
 ```
 
-### เรียกหลาย agents พร้อมกัน (ALGORITHM MODE)
+### เรียก pipeline (แนะนำ)
 ```
-/architect วาง design ระบบ notification
-/engineer implement ตาม design
-/tester เขียน test ครอบคลุม
+/pipeline สร้างระบบ notification
+```
+ระบบจะ auto-detect และเลือก pipeline ที่เหมาะสม
+
+### เรียก pipeline แบบระบุ
+```
+/pipeline แก้บั๊ก login ไม่ได้ --type=bugfix
 ```
 
-## Workflow แนะนำ
+## Implementation Details
 
-งานซับซ้อน → เรียงลำดับ:
-1. Architect → Engineer → Tester
+### Handoff Data Structure
+```javascript
+{
+  task: "original task",
+  pipeline_type: "full|bugfix|quick",
+  timestamp: "ISO string",
+  data: {
+    architecture: { /* Architect output */ },
+    implementation: { /* Engineer output */ },
+    test: { /* Tester output */ }
+  }
+}
+```
 
-งานแก้ bug → Debugger → Tester
+### Memory Integration
+ทุก agent บันทึก output ลง `.claude/MEMORY/`:
+- `architecture.md` — Architect outputs
+- `implementation.md` — Engineer outputs
+- `debug.md` — Debugger outputs
+- `test.md` — Tester outputs
 
-งาน prototype → Engineer เดี่ยว
+## Workflow Example
 
-## Note
-- Agents ทำงานผ่าน Task tool ใน Claude Code
-- แต่ละตัวมี workflow และ output เฉพาะ
+```
+User: /pipeline สร้าง face recognition API
+
+Pipeline: 📋 Type = full (complex task)
+
+🏗️  Architect: Designing...
+  → Pattern: REST API + Service Layer
+  → Components: [Camera, FaceDetect, FaceRecognize, MQTT]
+
+🔧 Engineer: Implementing...
+  → Files: 8 generated
+  → Dependencies: 5 identified
+
+✅ Tester: Validating...
+  → Coverage: 85%
+  → Status: APPROVED
+
+✅ Pipeline complete
+  → Recommendations: ["Ready to deploy"]
+```
