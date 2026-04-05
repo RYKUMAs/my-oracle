@@ -1,139 +1,119 @@
-# Oracle Multi-Agent System v3.0
+# Oracle Multi-Agent System v3.1
 
 ## Overview
-ระบบ multi-agent สำหรับ Oracle "Apollo" พร้อม **Deep Research + Plan & Confirm** workflow
+ระบบ multi-agent สำหรับ Oracle "Apollo" พร้อม **Deep Research + Plan & Confirm + Diagrams**
 
-## 🔥 New in v3.0
+## 🔥 New in v3.1
 
-### New Project Workflow
-```
-Deep Research → Plan → [CONFIRM] → Build
-```
+### Diagram Generation
+- **Documenter v2.0** — สร้าง docs พร้อม diagrams
+- **Diagrammer Agent** — สร้าง diagram เฉพาะทาง (Flowchart, Box, Sequence)
 
-สำหรับโปรเจกต์ใหม่:
-1. 🔍 **Deep Research** — ศึกษาลึก 3-5 เท่า
-2. 📋 **Plan** — วางแผนพร้อม timeline
-3. ⏸️ **CONFIRM** — **แจ้งคุณดู → รอ YES**
-4. ✅ เมื่อคุณตอบ YES → เริ่ม implement
+## Agents (9/9)
 
-## Agents (8/8)
-
-| Agent | Role | Icon | สำหรับ |
-|-------|------|------|---------|
-| **Researcher** 🔍 | Deep Research | วิจัยเทคโนโลยีลึกๆ |
-| **Planner** 📋 | Plan & Show | วางแผน + แจ้ง |
-| **Architect** 🏗️ | System Design | ออกแบบ architecture |
-| **Engineer** 🔧 | Implementation | เขียนโค้ด |
-| **Reviewer** 👀 | Code Review | ตรวจคุณภาพ |
-| **Debugger** 🐛 | Bug Fixing | แก้ปัญหา |
-| **Tester** ✅ | Validation | เทส |
-| **Documenter** 📚 | Documentation | เขียน docs |
+| Agent | Icon | Role | v |
+|-------|------|------|---|
+| **Researcher** | 🔍 | Deep Research | - |
+| **Planner** | 📋 | Plan & Confirm | - |
+| **Architect** | 🏗️ | System Design | - |
+| **Engineer** | 🔧 | Implementation | - |
+| **Reviewer** | 👀 | Code Review | - |
+| **Debugger** | 🐛 | Bug Fixing | - |
+| **Tester** | ✅ | Validation | - |
+| **Documenter** | 📚 | Docs + Diagrams | v2.0 ⭐ |
+| **Diagrammer** | 📊 | Diagrams Only | NEW ⭐ |
 
 ## Pipelines
 
-### 1. New Project (NEW!)
+### 1. New Project
 ```
-Researcher (Deep) → Planner → [WAIT CONFIRM] → Architect → Engineer → Reviewer → Tester → Documenter
+Research → Plan → [CONFIRM] → Build → Docs + Diagrams
 ```
-ใช้สำหรับ: **โปรเจกต์ใหม่**
 
-**Keywords:** `โปรเจกต์ใหม่`, `ใหม่`, `new project`
-
-### 2. Research (Deep)
+### 2. Production
 ```
-Researcher (Deep) → Architect
+Architect → Engineer → Reviewer → Tester → Documenter → Diagrammer
 ```
-ใช้สำหรับ: วิจัยลึก
 
-### 3. Production
+### 3. Full Development
 ```
 Architect → Engineer → Reviewer → Tester → Documenter
 ```
 
-### 4. Full Development
-```
-Architect → Engineer → Reviewer → Tester
-```
-
-### 5. Bug Fix
-```
-Debugger → Tester
-```
-
-### 6. Quick
-```
-Engineer → Tester
-```
-
 ## Usage
 
-### สำหรับโปรเจกต์ใหม่ (แนะนำ)
+### เมื่อเสร็จโปรเจกต์ (สร้าง docs + diagrams)
+
+**Option 1: Documenter (เร็ว)**
 ```
-/pipeline โปรเจกต์ใหม่ [ชื่อโปรเจกต์]
+/documenter [project]
+```
+ได้:
+- README.md
+- API.md
+- ARCHITECTURE.md (พร้อม diagram)
+- **FLOWCHART.md** (NEW!)
+- CONTRIBUTING.md
+- CHANGELOG.md
+
+**Option 2: Diagrammer (เฉพาะ diagrams)**
+```
+/diagrammer [code] --type=flowchart
+/diagrammer [project] --type=all
+```
+ได้:
+- Flowchart (Mermaid)
+- Box Diagram
+- Sequence Diagram
+- Architecture Diagram
+
+**Option 3: ทั้งคู่ (ครบ)**
+```
+/documenter [project]
+/diagrammer [project] --type=all
 ```
 
-**ตัวอย่าง:**
-```
-/pipeline โปรเจกต์ใหม่ ระบบ face recognition
-```
+### เปรียบเทียบ
 
-**Flow:**
-1. 🔍 Deep Research → ได้ recommendation
-2. 📋 Plan → ได้ timeline
-3. ⏸️ **แจ้งคุณดู** → พิมพ์ `YES` เพื่อเริ่ม
-4. ✅ Implement → เริ่มสร้างจริง
+| ต้องการ | ใช้ตัวไหน |
+|----------|-----------|
+| Docs ครบ + diagram พื้นฐาน | `/documenter` |
+| Diagram ลึกๆ / เฉพาะส่วน | `/diagrammer` |
+| ทั้งหมด (ครบที่สุด) | `/documenter` → `/diagrammer` |
 
-### สำหรับงานทั่วไป
-```
-/pipeline [task]              → auto-detect
-/architect [task]             → ออกแบบ
-/engineer [task]              → implement
-/researcher [query] --deep    → วิจัยลึก
-/planner [task]               → วางแผน
-/documenter [project]         → สร้าง docs
-```
-
-## Example: New Project Flow
+## Example: เสร็จโปรเจกต์
 
 ```
-You: /pipeline โปรเจกต์ใหม่ ระบบ face recognition
+You: /documenter face-recognition
 
 Oracle:
-🔍 Phase 1: Deep Research
-   └─ Comparing: K230 vs ESP32 vs Raspberry Pi
-   └─ Recommendation: K230 + MicroPython
-   └─ Confidence: 85%
+✅ สร้าง 6 ไฟล์:
+   - README.md
+   - API.md
+   - ARCHITECTURE.md (พร้อม diagram)
+   - FLOWCHART.md
+   - CONTRIBUTING.md
+   - CHANGELOG.md
 
-📋 Phase 2: Planning
-   └─ Phase 1: Setup (1-2 days)
-   └─ Phase 2: Core (1 week)
-   └─ Phase 3: Test (2-3 days)
-   └─ Total: ~2 weeks
+You: /diagrammer face-recognition --type=all
 
-⏸️  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    📋 PLAN SUMMARY
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-   Project: Face Recognition System
-   Tech: K230 + MicroPython
-   Timeline: 2 weeks
-
-   ❓ ตกลงไหม? พิมพ์ YES เพื่อเริ่ม
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-You: YES
-
-Oracle: ✅ เริ่ม implement!
-   🏗️ Architect...
-   🔧 Engineer...
-   👀 Reviewer...
-   ✅ Tester...
-   📚 Documenter...
-
-   ✅ เสร็จแล้ว!
+Oracle:
+✅ สร้าง 4 diagrams:
+   - Flowchart
+   - Box Diagram
+   - Sequence Diagram
+   - Architecture Diagram
 ```
 
+## Diagram Format
+
+ทุก diagram ใช้ **Mermaid** format — สามารถ:
+- Paste ใน GitHub/GitLab/Notion (native support)
+- Render ที่ https://mermaid.live
+- Export เป็น PNG/SVG
+
 ## Version History
+- **v3.1** — Documenter v2.0 + Diagrammer agent
 - **v3.0** — Deep Research + Plan & Confirm workflow
 - **v2.1** — เพิ่ม Researcher, Reviewer, Documenter
 - **v2.0** — Pipeline orchestrator + handoff
