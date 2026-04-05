@@ -210,27 +210,42 @@ async function runWorkflow(skills) {
 // 🔥 AI Pipeline (สำคัญสุด)
 // ======================
 async function runAIPipeline(skills, memoryManager) {
-  logger.log("🧠 Running AI Learning Pipeline...");
+  logger.log("🧠 Running Collaborative AI Pipeline...");
 
-  if (skills["learn"]?.execute) {
-    await skills["learn"].execute({
-      memory: memoryManager,
-      agents
-    });
-  } else {
-    logger.log("⚠️ learn skill not found or invalid");
-  }
+  let context = {
+    memory: memoryManager,
+    data: {}
+  };
 
+  // 🏗️ Architect
   if (skills["architect"]?.execute) {
-    await skills["architect"].execute({
-      memory: memoryManager,
-      agents
-    });
-  } else {
-    logger.log("⚠️ architect skill not found or invalid");
+    const result = await skills["architect"].execute(context);
+    context.data.architecture = result;
+    memoryManager.write("architecture.md", result);
   }
 
-  logger.log("✅ AI Pipeline Complete!");
+  // 🔧 Engineer
+  if (skills["engineer"]?.execute) {
+    const result = await skills["engineer"].execute(context);
+    context.data.implementation = result;
+    memoryManager.write("implementation.md", result);
+  }
+
+  // 🐛 Debugger
+  if (skills["debugger"]?.execute) {
+    const result = await skills["debugger"].execute(context);
+    context.data.debug = result;
+    memoryManager.write("debug.md", result);
+  }
+
+  // ✅ Tester
+  if (skills["tester"]?.execute) {
+    const result = await skills["tester"].execute(context);
+    context.data.test = result;
+    memoryManager.write("test.md", result);
+  }
+
+  logger.log("🔥 Collaborative AI Pipeline Complete!");
 }
 
 // ======================
