@@ -1,54 +1,59 @@
 {
-  "timestamp": "2026-04-07T14:46:28+07:00",
-  "working_directory": "J:\\CodeAgent\\facericonition",
-  "is_git_repo": false,
+  "timestamp": "2026-04-07T16:40:00+07:00",
+  "working_directory": "J:\\CodeAgent\\my-oracle",
+  "is_git_repo": true,
+  "branch": "main",
   "modified_files": [
-    "main.py"
+    ".claude/CHECKPOINT.json",
+    ".claude/settings.local.json"
   ],
-  "recent_commits": [],
+  "untracked_files": [
+    "tools/"
+  ],
+  "recent_commits": [
+    "dbc1bab feat: add checkpoint system and enhance recap for session recovery",
+    "5b81a29 feat: enhance dashboard with recent activity tracking",
+    "3d0abe2 feat: add 5 major features to Oracle v3.4"
+  ],
   "active_tasks": [],
-  "context": "เสร็จแล้ว! main.py พร้อมทดสอบบน K230 - WiFi + MQTT เพิ่มเรียบร้อย",
+  "context": "✅ K230 Face Crop SUCCESS — ภาพใบหน้า crop ถูกต้องแล้ว",
   "next_steps": [
-    "รอผู้ใช้ทดสอบรัน K230",
-    "ตรวจสอบผล WiFi connection",
-    "ตรวจสอบผล MQTT connection",
-    "ดูข้อมูลใน MQTTX"
+    "งานเสร็จแล้ว! พร้อมทำอย่างอื่นต่อ"
   ],
-  "mqttx_setup": {
-    "name": "K230-Test",
-    "host": "178.128.49.254",
-    "port": 1883,
-    "username": "Apinun",
-    "password": "",
-    "ssl": false,
-    "subscribe_topics": ["RCN/ID001/#", "RCN/ID001/DATA", "RCN/ID001/image"]
-  },
-  "changes_summary": {
-    "file": "main.py (31KB)",
-    "features_complete": [
-      "WiFi Auto-Connect",
-      "MQTT Client (umqtt.simple)",
-      "MQTT publish DATA (JSON)",
-      "MQTT publish IMAGE (base64 JPEG)",
-      "Network status display",
-      "Connection test functions"
+  "achievement": {
+    "title": "K230 Face Crop Complete",
+    "description": "ทำให้ K230 ส่งภาพเฉพาะใบหน้าได้สำเร็จ",
+    "solution": "Client-side crop — K230 ส่งภาพเต็ม+พิกัด → Dashboard crop ด้วย CSS",
+    "files_modified": [
+      "J:\\CodeAgent\\facericonition\\main.py",
+      "J:\\CodeAgent\\mqtt-monitor\\index.html"
     ]
   },
-  "wifi_config": {
-    "ssid": "CMMC_AIS_5G",
-    "password": "zxc12345",
-    "warning": "K230 supports 2.4G WiFi only - this SSID may not work!"
+  "solution_summary": {
+    "approach": "Client-side crop แทน Server-side",
+    "k230": "ส่ง JSON {image: base64, box: {x,y,w,h}}",
+    "dashboard": "รับ JSON + crop ด้วย CSS left/top",
+    "formula": "left = -box.x + (200 - box.w) / 2"
   },
-  "mqtt_config": {
-    "broker": "178.128.49.254:1883",
-    "user": "Apinun",
-    "topics": {
-      "data": "RCN/ID001/DATA",
-      "image": "RCN/ID001/image"
-    }
+  "failed_attempts_before_success": [
+    "crop_rectangle() — TypeError",
+    "draw_image() — TypeError",
+    "crop(roi) — ไม่ crop",
+    "to_image(roi) — AttributeError",
+    "get/set_pixel — TypeError",
+    "สูตร left/top เดิม — ภาพเลื่อนผิด"
+  ],
+  "k230_project": {
+    "location": "J:\\CodeAgent\\facericonition",
+    "file": "main.py",
+    "status": "✅ DONE — ส่ง JSON payload ถูกต้อง"
   },
+  "mqtt_monitor_project": {
+    "location": "J:\\CodeAgent\\mqtt-monitor",
+    "file": "index.html",
+    "status": "✅ DONE — crop ภาพถูกต้อง"
+  },
+  "user_confirmation": "ตอนนี้ดีแล้วครับ",
   "oracle_version": "v3.5",
-  "session_type": "feature_development",
-  "project": "K230 Face Recognition with WiFi + MQTT",
-  "status": "COMPLETE - Ready for hardware testing"
+  "session_type": "k230_crop_complete"
 }

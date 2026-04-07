@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Monitor — K230 Face Recognition</title>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #eee;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        .header h1 {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header h1::before {
+            content: "🔬";
+            font-size: 28px;
+        }
+        /* Status Badge */
+        .status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status.disconnected {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        .status.disconnected::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+        }
+        .status.connected {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        .status.connected::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        /* Config Panel */
+        .config {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+        }
+        .config-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .config-group label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+        }
+        .config-group input {
+            padding: 10px 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .config-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .card h2 {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* Messages */
+        .messages {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .message {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .message-topic {
+            font-size: 12px;
+            color: #3b82f6;
+            margin-bottom: 5px;
+        }
+        .message-time {
+            font-size: 11px;
+            color: #666;
+            float: right;
+        }
+        .message-content {
+            font-size: 13px;
+            word-break: break-all;
+        }
+        .message-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        /* JSON Display */
+        .json-display {
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        /* Image Preview */
+        .image-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .image-preview .placeholder {
+            padding: 40px;
+            color: #666;
+            text-align: center;
+        }
+        .image-info {
+            font-size: 12px;
+            color: #888;
+        }
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+        }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        /* Timestamp */
+        .timestamp {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>MQTT Monitor</h1>
+            <div class="status disconnected" id="status">Disconnected</div>
+        </div>
+
+        <!-- Config -->
+        <div class="config">
+            <div class="config-group">
+                <label>Broker</label>
+                <input type="text" id="broker" value="178.128.49.254" placeholder="broker.example.com">
+            </div>
+            <div class="config-group">
+                <label>Port</label>
+                <input type="number" id="port" value="1883">
+            </div>
+            <div class="config-group">
+                <label>Topic</label>
+                <input type="text" id="topic" value="RCN/#">
+            </div>
+            <div class="config-group" style="justify-content: flex-end;">
+                <button class="btn btn-primary" id="connectBtn" onclick="toggleConnect()">Connect</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="msgCount">0</div>
+                <div class="stat-label">Messages</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="dataCount">0</div>
+                <div class="stat-label">Data</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="imageCount">0</div>
+                <div class="stat-label">Images</div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Messages -->
+            <div class="card">
+                <h2>📨 Messages</h2>
+                <div class="messages" id="messages"></div>
+            </div>
+
+            <!-- Latest Data -->
+            <div class="card">
+                <h2>📊 Latest Data (JSON)</h2>
+                <div class="json-display" id="jsonDisplay">
+                    <pre style="color: #666;">Waiting for data...</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Preview -->
+        <div class="card" style="margin-top: 20px;">
+            <h2>🖼️ Latest Image</h2>
+            <div class="image-preview" id="imagePreview">
+                <div class="placeholder">Waiting for image...</div>
+            </div>
+        </div>
+
+        <div class="timestamp" id="timestamp"></div>
+    </div>
+
+    <script>
+        let client = null;
+        let msgCount = 0;
+        let dataCount = 0;
+        let imageCount = 0;
+
+        function updateTimestamp() {
+            document.getElementById('timestamp').textContent = new Date().toLocaleString('th-TH');
+        }
+        setInterval(updateTimestamp, 1000);
+        updateTimestamp();
+
+        function toggleConnect() {
+            if (client) {
+                disconnect();
+            } else {
+                connect();
+            }
+        }
+
+        function connect() {
+            const broker = document.getElementById('broker').value;
+            const port = document.getElementById('port').value;
+            const topic = document.getElementById('topic').value;
+
+            const clientId = 'mqtt_monitor_' + Math.random().toString(16).substr(2, 8);
+            const url = `ws://${broker}:${port}/mqtt`;
+
+            updateStatus('connecting', 'Connecting...');
+
+            client = mqtt.connect(url, {
+                clientId,
+                clean: true,
+                connectTimeout: 10000,
+                reconnectPeriod: 5000
+            });
+
+            client.on('connect', () => {
+                updateStatus('connected', 'Connected');
+                document.getElementById('connectBtn').textContent = 'Disconnect';
+                document.getElementById('connectBtn').className = 'btn btn-danger';
+
+                client.subscribe(topic, (err) => {
+                    if (err) {
+                        addMessage('SYSTEM', 'Subscribe failed: ' + err.message);
+                    } else {
+                        addMessage('SYSTEM', 'Subscribed to: ' + topic);
+                    }
+                });
+            });
+
+            client.on('message', (t, message) => {
+                msgCount++;
+                document.getElementById('msgCount').textContent = msgCount;
+
+                try {
+                    const str = message.toString();
+
+                    // Check if JSON
+                    if (str.startsWith('{')) {
+                        const data = JSON.parse(str);
+                        dataCount++;
+                        document.getElementById('dataCount').textContent = dataCount;
+                        document.getElementById('jsonDisplay').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                        addMessage(t, JSON.stringify(data, null, 2));
+                    }
+                    // Check if base64 image
+                    else if (str.includes('data:image') || str.length > 1000) {
+                        imageCount++;
+                        document.getElementById('imageCount').textContent = imageCount;
+
+                        let imgSrc = str;
+                        if (!str.startsWith('data:image')) {
+                            imgSrc = 'data:image/jpeg;base64,' + str;
+                        }
+
+                        document.getElementById('imagePreview').innerHTML =
+                            '<img src="' + imgSrc + '" alt="Latest image">' +
+                            '<div class="image-info">' + str.length + ' chars</div>';
+                        addMessage(t, 'Image received (' + str.length + ' chars)');
+                    }
+                    else {
+                        addMessage(t, str);
+                    }
+                } catch (e) {
+                    addMessage(t, message.toString());
+                }
+            });
+
+            client.on('error', (err) => {
+                updateStatus('disconnected', 'Error: ' + err.message);
+                disconnect();
+            });
+
+            client.on('close', () => {
+                if (document.getElementById('status').classList.contains('connected')) {
+                    updateStatus('disconnected', 'Disconnected');
+                }
+            });
+        }
+
+        function disconnect() {
+            if (client) {
+                client.end();
+                client = null;
+            }
+            updateStatus('disconnected', 'Disconnected');
+            document.getElementById('connectBtn').textContent = 'Connect';
+            document.getElementById('connectBtn').className = 'btn btn-primary';
+        }
+
+        function updateStatus(state, text) {
+            const status = document.getElementById('status');
+            status.className = 'status ' + state;
+            status.textContent = text;
+        }
+
+        function addMessage(topic, content) {
+            const messages = document.getElementById('messages');
+            const time = new Date().toLocaleTimeString('th-TH');
+            const div = document.createElement('div');
+            div.className = 'message';
+            div.innerHTML =
+                '<div class="message-topic">' + topic + ' <span class="message-time">' + time + '</span></div>' +
+                '<div class="message-content">' + content + '</div>';
+            messages.insertBefore(div, messages.firstChild);
+
+            // Keep only last 50 messages
+            while (messages.children.length > 50) {
+                messages.removeChild(messages.lastChild);
+            }
+        }
+    </script>
+</body>
+</html>
