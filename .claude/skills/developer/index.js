@@ -1,8 +1,20 @@
+const DEVELOPER_AVATAR = `
+  ██████████████
+  ████████  ████████
+  ████        ████
+  ████  ████  ████
+   ██████████████
+
+💻⌨️ Developer
+เขียนโค้ด | Code | Implementation
+`;
+
 module.exports = {
   name: "developer",
   description: "เขียนโค้ดจริงตาม design",
 
   execute: async (context) => {
+    console.log(DEVELOPER_AVATAR);
     console.log("💻  Developer: กำลังเขียนโค้ด...");
 
     const task = context.task || context.input || "";

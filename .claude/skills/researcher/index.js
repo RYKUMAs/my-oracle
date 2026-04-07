@@ -1,3 +1,16 @@
+const RESEARCHER_AVATAR = `
+   ████
+  ████
+ ██████
+█ ██ █
+  ████ █████ ████ ████
+  ████████ ████████ ██████
+ ██████
+
+🔍🔎 Researcher
+สืบค้น | วิจัย | Deep Research
+`;
+
 module.exports = {
   name: "researcher",
   description: "วิจัยเทคโนโลยีแบบลึก (Deep Research Mode)",
@@ -7,6 +20,7 @@ module.exports = {
     const memory = context.memory || {};
     const deepMode = context.deep || context.deepMode || query.includes("--deep");
 
+    console.log(RESEARCHER_AVATAR);
     console.log(`🔍 Researcher: กำลังวิจัย... (${deepMode ? "DEEP MODE" : "normal"})`);
 
     if (!query) {

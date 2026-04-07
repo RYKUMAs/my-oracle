@@ -1,8 +1,21 @@
+const DEBUGGER_AVATAR = `
+     ████
+   ██████
+  ██████
+ ████████████
+   ██████
+     ████
+
+🐛🔧 Debugger
+แกะสิ่งเสีย | Debug | Fix Issues
+`;
+
 module.exports = {
   name: "debugger",
   description: "แก้ bug และวิเคราะห์ปัญหา",
 
   execute: async (context) => {
+    console.log(DEBUGGER_AVATAR);
     console.log("🐛  Debugger: กำลังวิเคราะห์...");
 
     const error = context.error || context.input || "";

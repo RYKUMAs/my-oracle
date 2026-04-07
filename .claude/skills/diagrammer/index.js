@@ -1,8 +1,21 @@
+const DIAGRAMMER_AVATAR = `
+  ██████
+ ██████
+███████
+█ ██ █
+ ████ █████ ████
+  ██████████████
+
+📊📈 Diagrammer
+สร้าง diagram | Visualize | Flowchart
+`;
+
 module.exports = {
   name: "diagrammer",
   description: "สร้าง diagram ประกอบโค้ด (Flowchart, Box, Sequence)",
 
   execute: async (context) => {
+    console.log(DIAGRAMMER_AVATAR);
     console.log("📊 Diagrammer: กำลังสร้าง diagram...");
 
     const code = context.code || context.files || [];

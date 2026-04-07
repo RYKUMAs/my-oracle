@@ -1,8 +1,21 @@
+const ENGINEER_AVATAR = `
+   ███
+  ████
+ ██████
+██ █ ███
+  ████████
+ ████████
+
+🔧⚙️ Engineer
+วางแผน | โครงสร้าง | Implementation Plan
+`;
+
 module.exports = {
   name: "engineer",
   description: "เขียนโค้ดและ implement features",
 
   execute: async (context) => {
+    console.log(ENGINEER_AVATAR);
     console.log("🔧  Engineer: กำลัง implement...");
 
     const task = context.task || context.input || "";

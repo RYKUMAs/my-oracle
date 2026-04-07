@@ -1,8 +1,21 @@
+const TESTER_AVATAR = `
+   ████
+ ██████
+███████
+███ ██ ████
+  ████ █████ ████
+   ████████
+
+✅🧪 Tester
+ทดสอบ | Validate | Quality Assurance
+`;
+
 module.exports = {
   name: "tester",
   description: "เขียน tests และ validate quality",
 
   execute: async (context) => {
+    console.log(TESTER_AVATAR);
     console.log("✅  Tester: กำลัง validate...");
 
     const implementation = context.implementation || context.data?.implementation || {};

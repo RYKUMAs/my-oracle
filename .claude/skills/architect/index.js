@@ -1,8 +1,21 @@
+const ARCHITECT_AVATAR = `
+  ██████
+ ████████
+███ ██ ███
+█████   ████
+████     ████
+█████████████
+
+🏗️📐 Architect
+ออกแบบ | โครงสร้าง | System Design
+`;
+
 module.exports = {
   name: "architect",
   description: "ออกแบบ architecture และ system design",
 
   execute: async (context) => {
+    console.log(ARCHITECT_AVATAR);
     console.log("🏗️  Architect: กำลังออกแบบระบบ...");
 
     const task = context.task || context.input || "";

@@ -1,8 +1,21 @@
+const REVIEWER_AVATAR = `
+  ████
+ ██████
+███████
+█     █
+█     █
+ ██████
+
+👀🔍 Reviewer
+ตรวจสอบ | Code Review | Quality
+`;
+
 module.exports = {
   name: "reviewer",
   description: "Code review และตรวจสอบคุณภาพโค้ด",
 
   execute: async (context) => {
+    console.log(REVIEWER_AVATAR);
     console.log("👀  Reviewer: กำลังรีวิวโค้ด...");
 
     const code = context.code || context.implementation || context.files || [];

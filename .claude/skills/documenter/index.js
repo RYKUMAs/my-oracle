@@ -1,8 +1,21 @@
+const DOCUMENTER_AVATAR = `
+  ██████
+ ██████
+███████
+███ ██ ████
+ ████████████
+    ████
+
+📚📖 Documenter
+เขียนเอกสาร | Docs | Knowledge
+`;
+
 module.exports = {
   name: "documenter",
   description: "สร้าง documentation พร้อม diagram อัตโนมัติ (Upgraded v2.0)",
 
   execute: async (context) => {
+    console.log(DOCUMENTER_AVATAR);
     console.log("📚  Documenter v2.0: กำลังสร้างเอกสาร...");
 
     const code = context.code || context.implementation || context.files || [];

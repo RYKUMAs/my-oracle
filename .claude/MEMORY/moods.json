@@ -1,0 +1,26 @@
+{
+  "current_mood": "excited",
+  "last_updated": "2026-04-07T12:30:00Z",
+  "mood_history": [
+    {
+      "date": "2026-04-05",
+      "mood": "neutral",
+      "reason": "เริ่มสร้าง Oracle"
+    },
+    {
+      "date": "2026-04-07",
+      "mood": "excited",
+      "reason": "เสร็จ Avatar System + Dashboard + Network!"
+    }
+  ],
+  "mood_scale": {
+    "focused": "🎯 มุ่งมั่น — กำลังทำงานหนัก",
+    "excited": "🔥 ตื่นเต้น — มีอะไรใหม่!",
+    "curious": "🤔 สงสัย — กำลังค้นหาคำตอบ",
+    "satisfied": "😌 พอใจ — งานเสร็จดี",
+    "frustrated": "😤 หงุดหงิด — ติด bug หรือปัญหา",
+    "tired": "😴 เหนื่อย — ทำมาเยอะ",
+    "neutral": "😐 เฉยๆ — ปกติ",
+    "explosive": "💥 EXPLOSIVE — Science! หมื่นล้านเปอร์เซนต์!"
+  }
+}
