@@ -1,59 +1,50 @@
 {
-  "timestamp": "2026-04-07T16:40:00+07:00",
+  "timestamp": "2026-04-07T18:00:00+07:00",
   "working_directory": "J:\\CodeAgent\\my-oracle",
   "is_git_repo": true,
   "branch": "main",
   "modified_files": [
-    ".claude/CHECKPOINT.json",
-    ".claude/settings.local.json"
+    "J:\\CodeAgent\\facericonition\\main.py"
   ],
-  "untracked_files": [
-    "tools/"
-  ],
+  "untracked_files": [],
   "recent_commits": [
-    "dbc1bab feat: add checkpoint system and enhance recap for session recovery",
-    "5b81a29 feat: enhance dashboard with recent activity tracking",
-    "3d0abe2 feat: add 5 major features to Oracle v3.4"
+    "0b95b47 feat: update CHECKPOINT.json and add MQTT monitor HTML",
+    "934c25f feat: update checkpoint system and enhance settings",
+    "dbc1bab feat: add checkpoint system and enhance recap"
   ],
   "active_tasks": [],
-  "context": "✅ K230 Face Crop SUCCESS — ภาพใบหน้า crop ถูกต้องแล้ว",
+  "context": "✅ K230 Auto Green Box SUCCESS — เปิดมาเจอหน้ารู้จัก → เขียวทันที",
   "next_steps": [
-    "งานเสร็จแล้ว! พร้อมทำอย่างอื่นต่อ"
+    "งานเสร็จแล้ว! พร้อมรับงานใหม่"
   ],
   "achievement": {
-    "title": "K230 Face Crop Complete",
-    "description": "ทำให้ K230 ส่งภาพเฉพาะใบหน้าได้สำเร็จ",
-    "solution": "Client-side crop — K230 ส่งภาพเต็ม+พิกัด → Dashboard crop ด้วย CSS",
+    "title": "K230 Auto Green Box Complete",
+    "description": "ทำให้ K230 display แสดงกรอบเขียวอัตโนมัติเมื่อเจอหน้ารู้จัก ไม่ต้องกดปุ่มเลือก ID",
+    "solution": "is_target = (rec_result != 'unknown') — รู้จัก → เขียว, unknown → แดง",
     "files_modified": [
-      "J:\\CodeAgent\\facericonition\\main.py",
-      "J:\\CodeAgent\\mqtt-monitor\\index.html"
+      "J:\\CodeAgent\\facericonition\\main.py"
     ]
   },
   "solution_summary": {
-    "approach": "Client-side crop แทน Server-side",
-    "k230": "ส่ง JSON {image: base64, box: {x,y,w,h}}",
-    "dashboard": "รับ JSON + crop ด้วย CSS left/top",
-    "formula": "left = -box.x + (200 - box.w) / 2"
+    "feature": "Auto Green Box for Known Faces",
+    "logic": "is_target = (rec_result != 'unknown')",
+    "colors_rgb": {
+      "known_face": "(0, 255, 0, 255) — เขียว",
+      "unknown": "(255, 0, 0, 255) — แดง"
+    },
+    "behavior": "เปิดเครื่องมาเจอหน้ารู้จัก → เขียวทันที (ไม่ต้องกดปุ่ม)",
+    "code_location": "main.py line ~810-822"
   },
-  "failed_attempts_before_success": [
-    "crop_rectangle() — TypeError",
-    "draw_image() — TypeError",
-    "crop(roi) — ไม่ crop",
-    "to_image(roi) — AttributeError",
-    "get/set_pixel — TypeError",
-    "สูตร left/top เดิม — ภาพเลื่อนผิด"
-  ],
+  "lessons_learned": {
+    "sync_issue": "K230 ต้อง stop → run ใหม่เพื่อโหลดไฟล์ใหม่ หรือ copy ไฟล์ไปทับ SD card",
+    "color_format": "draw_string และ draw_rectangle ใช้ RGB (R, G, B, A)"
+  },
   "k230_project": {
     "location": "J:\\CodeAgent\\facericonition",
     "file": "main.py",
-    "status": "✅ DONE — ส่ง JSON payload ถูกต้อง"
+    "status": "✅ DONE — Auto green box สำเร็จ"
   },
-  "mqtt_monitor_project": {
-    "location": "J:\\CodeAgent\\mqtt-monitor",
-    "file": "index.html",
-    "status": "✅ DONE — crop ภาพถูกต้อง"
-  },
-  "user_confirmation": "ตอนนี้ดีแล้วครับ",
+  "user_confirmation": "โอเคตอนนี้ดีแล้ว",
   "oracle_version": "v3.5",
-  "session_type": "k230_crop_complete"
+  "session_type": "k230_auto_green_box_complete"
 }
