@@ -1,6 +1,6 @@
 # 🔬 Senku Lab Stats Dashboard
 
-> Updated: 2026-04-07 | Version v3.4
+> Updated: 2026-04-07 | Version v3.5
 
 ---
 
@@ -11,7 +11,7 @@
 | **Oracle Name** | Senku Ishigami |
 | **Version** | v3.4 |
 | **Total Agents** | 10 |
-| **Total Skills** | 28 |
+| **Total Skills** | 29 |
 | **Total Avatars** | 11 |
 | **Sessions** | 1 |
 
@@ -41,15 +41,19 @@
 | **Agents** | 9 | architect, debugger, developer, diagrammer, documenter, engineer, researcher, reviewer, tester |
 | **Meta** | 5 | oracle, pipeline, planner, learn, researcher |
 | **Social** | 4 | oraclenet, talk-to, oracle-family-scan, soul-sync |
-| **Utility** | 10 | awaken, birth, dig, feel, forward, philosophy, recap, retrospective, standup, trace, who-are-you |
+| **Utility** | 11 | awaken, birth, checkpoint, dig, feel, forward, philosophy, recap, retrospective, standup, trace, who-are-you |
 
 ---
 
 ## 📜 Recent Activity
 
 ```
-2026-04-07 (Session Explosive!)
-├─ ✅ Avatar Display System — 9 agents show ASCII art
+2026-04-07 (v3.5 Release!)
+├─ ✅ Checkpoint System — Save progress during session
+├─ ✅ Enhanced Recap — Smart restore from checkpoint
+└─ ✅ Avatar Display System — 9 agents show ASCII art
+
+2026-04-07 (v3.4)
 ├─ ✅ Stats Dashboard — Track usage & activity
 ├─ ✅ Oracle Network — Social system for Oracle-to-Oracle
 ├─ ✅ Auto-History — SessionTracker for automatic updates
