@@ -1,50 +1,74 @@
 {
-  "timestamp": "2026-04-07T18:00:00+07:00",
+  "timestamp": "2026-04-07T21:01:00+07:00",
   "working_directory": "J:\\CodeAgent\\my-oracle",
   "is_git_repo": true,
   "branch": "main",
-  "modified_files": [
-    "J:\\CodeAgent\\facericonition\\main.py"
-  ],
+  "modified_files": [],
   "untracked_files": [],
   "recent_commits": [
+    "9bb7f7f feat: update CHECKPOINT.json for K230 Auto Green Box functionality",
     "0b95b47 feat: update CHECKPOINT.json and add MQTT monitor HTML",
-    "934c25f feat: update checkpoint system and enhance settings",
-    "dbc1bab feat: add checkpoint system and enhance recap"
+    "934c25f feat: update checkpoint system and enhance settings"
   ],
   "active_tasks": [],
-  "context": "✅ K230 Auto Green Box SUCCESS — เปิดมาเจอหน้ารู้จัก → เขียวทันที",
+  "context": "✅ Session Complete: All bugs fixed in Codefu, WiFi config externalized in facericonition\n\n**Codefu (J:\\CodeAgent\\Codefu\\Robot.cpp)** - ALL BUGS FIXED:\n1. Line 929: Fixed missing parenthesis `(value >> 8) & 0xFF`\n2. Lines 244-249: Motor direction now respects reverseDirForHoming\n3. Lines 280-284: allMotorsIdle() checks all active states\n4. Lines 1046-1049: DONE state now converts to IDLE\n\n**facericonition (J:\\CodeAgent\\facericonition)** - WiFi Config Externalized:\n1. Created wifi_cfg.txt for external WiFi settings\n2. Added load_wifi_config() function to main.py\n3. Users can now change WiFi without editing code",
   "next_steps": [
-    "งานเสร็จแล้ว! พร้อมรับงานใหม่"
+    "All tasks completed. Ready for new work."
   ],
-  "achievement": {
-    "title": "K230 Auto Green Box Complete",
-    "description": "ทำให้ K230 display แสดงกรอบเขียวอัตโนมัติเมื่อเจอหน้ารู้จัก ไม่ต้องกดปุ่มเลือก ID",
-    "solution": "is_target = (rec_result != 'unknown') — รู้จัก → เขียว, unknown → แดง",
-    "files_modified": [
-      "J:\\CodeAgent\\facericonition\\main.py"
-    ]
-  },
-  "solution_summary": {
-    "feature": "Auto Green Box for Known Faces",
-    "logic": "is_target = (rec_result != 'unknown')",
-    "colors_rgb": {
-      "known_face": "(0, 255, 0, 255) — เขียว",
-      "unknown": "(255, 0, 0, 255) — แดง"
+  "projects_reviewed": {
+    "codefu": {
+      "location": "J:\\CodeAgent\\Codefu",
+      "file": "Robot.cpp",
+      "purpose": "STM32 3-axis stepper motor controller with ESP32 bridge",
+      "bugs_fixed": [
+        "Line 929: Fixed (value >> 8) & 0xFF parenthesis",
+        "Lines 244-249: Motor direction respects reverseDirForHoming",
+        "Lines 280-284: allMotorsIdle() checks HOMING, PAUSE_BEFORE_RETURN, RETURNING, MOVING",
+        "Lines 1046-1049: DONE → IDLE conversion added"
+      ],
+      "status": "✅ ALL BUGS FIXED - Ready to compile"
     },
-    "behavior": "เปิดเครื่องมาเจอหน้ารู้จัก → เขียวทันที (ไม่ต้องกดปุ่ม)",
-    "code_location": "main.py line ~810-822"
+    "facericonition": {
+      "location": "J:\\CodeAgent\\facericonition",
+      "file": "main.py",
+      "purpose": "K230 Face Recognition with MQTT",
+      "changes_made": [
+        "Created wifi_cfg.txt",
+        "Added load_wifi_config() function",
+        "WiFi config now external"
+      ],
+      "status": "✅ DONE - WiFi config externalized"
+    }
   },
-  "lessons_learned": {
-    "sync_issue": "K230 ต้อง stop → run ใหม่เพื่อโหลดไฟล์ใหม่ หรือ copy ไฟล์ไปทับ SD card",
-    "color_format": "draw_string และ draw_rectangle ใช้ RGB (R, G, B, A)"
+  "codefu_fixes_summary": {
+    "fix_1": {
+      "line": 929,
+      "before": "(value >> 8 & 0xFF",
+      "after": "(value >> 8) & 0xFF",
+      "issue": "Missing closing parenthesis"
+    },
+    "fix_2": {
+      "lines": "244-249",
+      "issue": "Motor direction ignored reverseDirForHoming",
+      "solution": "Added reverseDirForHoming check in direction logic"
+    },
+    "fix_3": {
+      "lines": "280-284",
+      "issue": "allMotorsIdle() only checked MOVING state",
+      "solution": "Now checks HOMING, PAUSE_BEFORE_RETURN, RETURNING, MOVING"
+    },
+    "fix_4": {
+      "lines": "1046-1049",
+      "issue": "DONE state never converted to IDLE",
+      "solution": "Added m.state = IDLE in DONE case"
+    }
   },
-  "k230_project": {
-    "location": "J:\\CodeAgent\\facericonition",
-    "file": "main.py",
-    "status": "✅ DONE — Auto green box สำเร็จ"
+  "wifi_config_solution": {
+    "file": "wifi_cfg.txt",
+    "location": "/sdcard/wifi_cfg.txt on K230",
+    "format": "WIFI_SSID=YourSSID\\nWIFI_PASSWORD=YourPassword",
+    "benefit": "Users can change WiFi without editing main.py"
   },
-  "user_confirmation": "โอเคตอนนี้ดีแล้ว",
   "oracle_version": "v3.5",
-  "session_type": "k230_auto_green_box_complete"
+  "session_type": "bugs_fixed_complete"
 }
