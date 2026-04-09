@@ -1,0 +1,42 @@
+{
+  "id": "2026-04-09-session3",
+  "timestamp": "2026-04-09T14:45:00+07:00",
+  "date": "2026-04-09",
+  "working_directory": "J:\\CodeAgent\\my-oracle",
+  "is_git_repo": true,
+  "branch": "main",
+  "modified_files": [
+    "J:\\CodeAgent\\facericonition\\main.py"
+  ],
+  "untracked_files": [],
+  "recent_commits": [
+    "b910ada feat: enhance checkpoint and recap systems with session history management",
+    "f4f1bab feat: update CHECKPOINT.json to reflect session completion",
+    "9bb7f7f feat: update CHECKPOINT.json for K230 Auto Green Box",
+    "0b95b47 feat: update CHECKPOINT.json and add MQTT monitor HTML",
+    "934c25f feat: update checkpoint system and enhance settings"
+  ],
+  "active_tasks": [],
+  "context": "🔧 กำลังแก้ปัญหา Face Crop ให้ส่งเฉพาะใบหน้า\n\n**ปัญหา:**\n- crop() ใน K230 เป็นแค่การเลือก ROI ไม่ได้ครอปภาพจริง\n- เวลาเรียก to_jpeg() ก็แปลงภาพต้นฉบับ (640x480) ไม่ใช่ภาพที่ครอป\n\n**วิธีที่ลอง:**\n1. เปลี่ยนเป็น roi = [x,y,w,h] แล้ว img.crop(roi) → ยังส่งภาพเต็ม\n2. เปลี่ยนเป็น roi = (x,y,w,h) tuple → ยังไม่ได้ลอง\n3. วิธีแก้ล่าสุด: ใช้ image.Image() สร้างภาพใหม่จาก ROI\n   ```python\n   cropped_img = image.Image(crop_w, crop_h, img.format(),\n                              alloc=image.ALLOC_REF,\n                              x=crop_x, y=crop_y,\n                              w=crop_w, h=crop_h,\n                              copy=True)\n   ```\n\n**สถานะ:** กำลังแก้ รออยู่ รอผลลัพธ์จากเพื่อนลอง",
+  "next_steps": [
+    "รอให้เพื่อนลองวิธี image.Image() ที่แก้ไปใหม่",
+    "ถ้ายังไม่ได้ ต้องค้นหาวิธีอื่น"
+  ],
+  "title": "แก้ Face Crop ให้ส่งเฉพาะใบหน้าจริง",
+  "status": "in_progress",
+  "pending": [
+    "แก้ปัญหา crop() ไม่ได้ครอบภาพจริง",
+    "ทำให้ส่งเฉพาะ ROI (169x228) ไม่ใช่ภาพเต็ม (640x480)"
+  ],
+  "projects_involved": ["facericonition"],
+  "changes_made": [
+    "แก้ publish_cropped_face() ให้ใช้ image.Image() สร้างภาพใหม่จาก ROI",
+    "เพิ่มพารามิเตอร์: alloc, x, y, w, h, copy=True",
+    "เปลี่ยนคอมเมนต์อธิบายสิ่งที่แก้"
+  ],
+  "key_learnings": [
+    "K230 img.crop() = เลือก ROI ไม่ได้ครอบภาพจริง",
+    "ต้องใช้ image.Image() สร้างภาพใหม่จาก ROI แย้",
+    "copy=True = คัดลอกข้อมูลจากภาพต้นฉบับมา"
+  ]
+}

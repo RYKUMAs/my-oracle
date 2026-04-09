@@ -1,0 +1,42 @@
+{
+  "id": "2026-04-09-session7",
+  "timestamp": "2026-04-09T18:00:00+07:00",
+  "date": "2026-04-09",
+  "working_directory": "J:\\CodeAgent\\my-oracle",
+  "is_git_repo": true,
+  "branch": "main",
+  "modified_files": [
+    "J:\\CodeAgent\\facericionition\\face_crop_universal.py"
+  ],
+  "untracked_files": [
+    ".claude/checkpoints/sessions/"
+  ],
+  "recent_commits": [
+    "b910ada feat: enhance checkpoint and recap systems with session history management",
+    "f4f1bab feat: update CHECKPOINT.json to reflect session completion",
+    "9bb7f7f feat: update CHECKPOINT.json for K230 Auto Green Box"
+  ],
+  "active_tasks": [],
+  "context": "สร้างไฟล์ face_crop_universal.py สำหรับ K230 Face Detection + Crop แบบ Direct Draw (เหมือน main.py) - ใช้ sensor.snapshot() dual channel (CHN_0 display, CHN_2 AI) - แก้ crop() จาก tuple format เป็น 4 args แยกกัน: crop(x1, y1, w, h) - เหลือแค่ฟังก์ชันครอบหน้าเก็บใน /sdcard/crop_tests/",
+  "next_steps": [
+    "ทดสอบ crop(x1, y1, w, h) บน K230 จริง",
+    "ยืนยันว่าไฟล์ที่เก็บเป็นภาพครอบหน้าไม่ใช่ภาพเต็ม"
+  ],
+  "title": "K230 Face Crop - Direct Draw + 4 args crop()",
+  "status": "in_progress",
+  "pending": [
+    "ทดสอบ face_crop_universal.py บน K230",
+    "ยืนยันการครอบหน้าทำงานถูกต้อง"
+  ],
+  "key_files": {
+    "primary": "J:\\CodeAgent\\facericionition\\face_crop_universal.py",
+    "reference": "J:\\CodeAgent\\facericonition\\main.py"
+  },
+  "settings": {
+    "display_mode": "st7701",
+    "resolution": "640x480",
+    "crop_dir": "/sdcard/crop_tests",
+    "save_interval": 30
+  },
+  "fix_applied": "เปลี่ยน img_display.crop((x1, y1, w, h)) เป็น img_display.crop(x1, y1, w, h)"
+}

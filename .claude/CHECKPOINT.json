@@ -1,74 +1,26 @@
 {
-  "timestamp": "2026-04-07T21:01:00+07:00",
+  "current_session_id": "2026-04-09-session7",
+  "timestamp": "2026-04-09T18:00:00+07:00",
   "working_directory": "J:\\CodeAgent\\my-oracle",
   "is_git_repo": true,
   "branch": "main",
-  "modified_files": [],
-  "untracked_files": [],
+  "modified_files": [
+    "J:\\CodeAgent\\facericionition\\face_crop_universal.py"
+  ],
+  "untracked_files": [
+    ".claude/checkpoints/sessions/"
+  ],
   "recent_commits": [
-    "9bb7f7f feat: update CHECKPOINT.json for K230 Auto Green Box functionality",
-    "0b95b47 feat: update CHECKPOINT.json and add MQTT monitor HTML",
-    "934c25f feat: update checkpoint system and enhance settings"
+    "b910ada feat: enhance checkpoint and recap systems with session history management",
+    "f4f1bab feat: update CHECKPOINT.json to reflect session completion",
+    "9bb7f7f feat: update CHECKPOINT.json for K230 Auto Green Box"
   ],
   "active_tasks": [],
-  "context": "✅ Session Complete: All bugs fixed in Codefu, WiFi config externalized in facericonition\n\n**Codefu (J:\\CodeAgent\\Codefu\\Robot.cpp)** - ALL BUGS FIXED:\n1. Line 929: Fixed missing parenthesis `(value >> 8) & 0xFF`\n2. Lines 244-249: Motor direction now respects reverseDirForHoming\n3. Lines 280-284: allMotorsIdle() checks all active states\n4. Lines 1046-1049: DONE state now converts to IDLE\n\n**facericonition (J:\\CodeAgent\\facericonition)** - WiFi Config Externalized:\n1. Created wifi_cfg.txt for external WiFi settings\n2. Added load_wifi_config() function to main.py\n3. Users can now change WiFi without editing code",
+  "context": "📸 K230 Face Crop - Direct Draw Mode\n\n**ไฟล์หลัก:** `face_crop_universal.py`\n\n**สิ่งที่ทำ:**\n1. สร้างไฟล์ single file สำหรับ K230 Face Detection + Crop\n2. ใช้ Direct Draw (เหมือน main.py) — sensor.snapshot() dual channel\n3. แก้ crop() จาก tuple → 4 args แยก: `crop(x1, y1, w, h)`\n\n**Dual Channel:**\n- CHN_0: Display (RGB888) สำหรับ UI\n- CHN_2: AI (RGBP888) สำหรับประมวลผล\n\n**เก็บไฟล์:**\n- `/sdcard/crop_tests/face_xxxxx.jpg` — ครอบเฉพาะหน้า\n\n**Fix ล่าสุด:**\n```python\n# เก่า (ผิด)\nroi_img = img_display.crop((x1, y1, w, h))\n\n# ใหม่ (ถูก)\nroi_img = img_display.crop(x1, y1, w, h)\n```",
   "next_steps": [
-    "All tasks completed. Ready for new work."
+    "ทดสอบ face_crop_universal.py บน K230",
+    "ยืนยันว่าได้ภาพครอบหน้าไม่ใช่ภาพเต็ม"
   ],
-  "projects_reviewed": {
-    "codefu": {
-      "location": "J:\\CodeAgent\\Codefu",
-      "file": "Robot.cpp",
-      "purpose": "STM32 3-axis stepper motor controller with ESP32 bridge",
-      "bugs_fixed": [
-        "Line 929: Fixed (value >> 8) & 0xFF parenthesis",
-        "Lines 244-249: Motor direction respects reverseDirForHoming",
-        "Lines 280-284: allMotorsIdle() checks HOMING, PAUSE_BEFORE_RETURN, RETURNING, MOVING",
-        "Lines 1046-1049: DONE → IDLE conversion added"
-      ],
-      "status": "✅ ALL BUGS FIXED - Ready to compile"
-    },
-    "facericonition": {
-      "location": "J:\\CodeAgent\\facericonition",
-      "file": "main.py",
-      "purpose": "K230 Face Recognition with MQTT",
-      "changes_made": [
-        "Created wifi_cfg.txt",
-        "Added load_wifi_config() function",
-        "WiFi config now external"
-      ],
-      "status": "✅ DONE - WiFi config externalized"
-    }
-  },
-  "codefu_fixes_summary": {
-    "fix_1": {
-      "line": 929,
-      "before": "(value >> 8 & 0xFF",
-      "after": "(value >> 8) & 0xFF",
-      "issue": "Missing closing parenthesis"
-    },
-    "fix_2": {
-      "lines": "244-249",
-      "issue": "Motor direction ignored reverseDirForHoming",
-      "solution": "Added reverseDirForHoming check in direction logic"
-    },
-    "fix_3": {
-      "lines": "280-284",
-      "issue": "allMotorsIdle() only checked MOVING state",
-      "solution": "Now checks HOMING, PAUSE_BEFORE_RETURN, RETURNING, MOVING"
-    },
-    "fix_4": {
-      "lines": "1046-1049",
-      "issue": "DONE state never converted to IDLE",
-      "solution": "Added m.state = IDLE in DONE case"
-    }
-  },
-  "wifi_config_solution": {
-    "file": "wifi_cfg.txt",
-    "location": "/sdcard/wifi_cfg.txt on K230",
-    "format": "WIFI_SSID=YourSSID\\nWIFI_PASSWORD=YourPassword",
-    "benefit": "Users can change WiFi without editing main.py"
-  },
   "oracle_version": "v3.5",
-  "session_type": "bugs_fixed_complete"
+  "session_type": "k230_face_crop_direct_draw"
 }

@@ -1,0 +1,43 @@
+{
+  "id": "2026-04-09-session4",
+  "timestamp": "2026-04-09T15:30:00+07:00",
+  "date": "2026-04-09",
+  "working_directory": "J:\\CodeAgent\\my-oracle",
+  "is_git_repo": true,
+  "branch": "main",
+  "modified_files": [
+    "J:\\CodeAgent\\facericonition\\main.py"
+  ],
+  "untracked_files": [],
+  "recent_commits": [
+    "b910ada feat: enhance checkpoint and recap systems with session history management",
+    "f4f1bab feat: update CHECKPOINT.json to reflect session completion",
+    "9bb7f7f feat: update CHECKPOINT.json for K230 Auto Green Box",
+    "0b95b47 feat: update CHECKPOINT.json and add MQTT monitor HTML",
+    "934c25f feat: update checkpoint system and enhance settings"
+  ],
+  "active_tasks": [],
+  "context": "🔧 แก้ปัญหา Face Crop ส่งภาพลายๆ\n\n**ปัญหา:**\n- img.crop() เป็นแค่ ROI reference — roi_img.size ยังเป็น 640x480\n- ภาพที่ส่งไปเว็บมีขนาด 640x480 ไม่ใช่ขนาด crop (149x214)\n- ภาพที่ได้ลายๆ เพราะแปลงผิดขนาด\n\n**วิธีที่ลอง:**\n1. img.crop() + to_jpeg() → ยังส่งภาพเต็ม\n2. image.Image() + draw_image() → signature ไม่ถูก\n3. to_numpy_ref() + image.Image(data=) → ValueError dense arrays only\n4. **วิธีล่าสุด:** numpy slicing + .copy() + .tobytes()\n   ```python\n   img_np = img_display.to_numpy_ref()\n   roi_np = img_np[crop_y:crop_y+crop_h, crop_x:crop_x+crop_w].copy()\n   cropped_img = image.Image(roi_np.shape[1], roi_np.shape[0], img_display.format(), data=roi_np.tobytes())\n   ```\n\n**สถานะ:** รอทดสอบวิธี numpy slicing + .copy()",
+  "next_steps": [
+    "รอผลลัพธ์จากการรันวิธี numpy slicing + .copy()",
+    "ถ้ายังไม่ได้ อาจต้องลอง save เป็นไฟล์แล้วโหลดใหม่"
+  ],
+  "title": "แก้ Face Crop ด้วย numpy slicing + .copy()",
+  "status": "in_progress",
+  "pending": [
+    "แก้ปัญหา crop() ไม่ได้ครอบจริง — roi_img ยังเป็น 640x480",
+    "ทำให้ภาพที่ส่งไปเว็บเป็นขนาด crop (149x214) ไม่ใช่ 640x480",
+    "แก้ปัญหาภาพลายๆ"
+  ],
+  "projects_involved": ["facericonition"],
+  "changes_made": [
+    "เปลี่ยนจาก image.Image() + draw_image() → numpy slicing + .copy()",
+    "เพิ่ม debug print แสดงขนาด img_display และ roi_img",
+    "ใช้ roi_np.copy() เพื่อสร้าง dense array ก่อน tobytes()"
+  ],
+  "key_learnings": [
+    "K230 img.crop() = ROI reference เท่านั้น ไม่ได้ครอปจริง",
+    "roi_img.size ยังเป็นขนาดภาพเดิม (640x480)",
+    "numpy slice ต้อง .copy() ก่อนจะเรียก .tobytes() ได้"
+  ]
+}

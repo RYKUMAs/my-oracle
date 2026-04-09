@@ -1,0 +1,45 @@
+{
+  "id": "2026-04-09-session5",
+  "timestamp": "2026-04-09T16:00:00+07:00",
+  "date": "2026-04-09",
+  "working_directory": "J:\\CodeAgent\\my-oracle",
+  "is_git_repo": true,
+  "branch": "main",
+  "modified_files": [
+    "J:\\CodeAgent\\facericonition\\main.py"
+  ],
+  "untracked_files": [],
+  "recent_commits": [
+    "b910ada feat: enhance checkpoint and recap systems with session history management",
+    "f4f1bab feat: update CHECKPOINT.json to reflect session completion",
+    "9bb7f7f feat: update CHECKPOINT.json for K230 Auto Green Box",
+    "0b95b47 feat: update CHECKPOINT.json and add MQTT monitor HTML",
+    "934c25f feat: update checkpoint system and enhance settings"
+  ],
+  "active_tasks": [],
+  "context": "🔧 แก้ปัญหา Face Crop — ค้นพบว่า K230 SDK ต่างจาก MaixPy V1\n\n**การค้นคว้าจาก MaixPy GitHub:**\n- MaixPy V1: `img.crop(x, y, w, h)` — 4 arguments แยกกัน\n- K230 SDK เก่า: `img.crop((x, y, w, h))` — ต้องการ tuple!\n\n**วิธีปัจจุบัน (Save-Load):**\n1. `roi_img = img_display.crop((crop_x, crop_y, crop_w, crop_h))` — tuple\n2. `roi_img.to_jpeg(temp_file)` — save เป็นไฟล์ (copy จริง!)\n3. `cropped_face = image.Image(temp_file)` — โหลดกลับมา\n4. `small_face = cropped_face.resize(160, 160)` — ย่อภาพ\n5. `img_bytes = small_face.to_jpeg(quality=75)` — แปลงเป็น bytes\n6. ลบไฟล์ชั่วคราว + gc.collect()\n\n**สถานะ:** เปลี่ยนเป็น tuple แล้ว รอทดสอบ",
+  "next_steps": [
+    "รอผลลัพธ์จากการรันด้วยวิธี crop((x,y,w,h)) + save-load",
+    "ถ้ายังไม่ได้ อาจต้องลองวิธีอื่น"
+  ],
+  "title": "แก้ Face Crop ด้วย crop(tuple) + Save-Load",
+  "status": "in_progress",
+  "pending": [
+    "แก้ปัญหา crop() ใน K230 SDK ต้องการ tuple ไม่ใช่ arguments แยก",
+    "ทดสอบวิธี Save-Load: crop → save file → load → resize",
+    "ยืนยันว่าภาพที่ได้ไม่ลายและมีขนาด 160x160"
+  ],
+  "projects_involved": ["facericonition"],
+  "changes_made": [
+    "เปลี่ยนจาก crop(x, y, w, h) → crop((x, y, w, h)) เป็น tuple",
+    "ใช้วิธี Save-Load: save เป็น /sdcard/temp_crop.jpg แล้วโหลดกลับ",
+    "เพิ่ม resize(160, 160) เพื่อลดขนาดภาพที่ส่ง MQTT",
+    "เพิ่ม gc.collect() คืนหน่วยความจำ"
+  ],
+  "key_learnings": [
+    "MaixPy V1 = crop(x, y, w, h) แต่ K230 SDK เก่า = crop((x, y, w, h)) tuple",
+    "K230 crop() เป็น ROI reference ไม่ได้ crop จริง",
+    "Save-Load วิธีคือ save เป็นไฟล์แล้วโหลดใหม่ = copy จริง",
+    "image.Image() constructor ไม่รับ Image object เป็น argument ที่ 3"
+  ]
+}

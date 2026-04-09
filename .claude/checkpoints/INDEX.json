@@ -1,3 +1,60 @@
 {
-  "sessions": []
+  "sessions": [
+    {
+      "id": "2026-04-09-session1",
+      "timestamp": "2026-04-09T11:55:00+07:00",
+      "date": "2026-04-09",
+      "title": "สร้างระบบ Checkpoint Session History + Senku Personality",
+      "status": "completed",
+      "summary": "ศึกษา Senku personality สร้าง memory file, ออกแบบและ implement ระบบ checkpoint session history พร้อมใช้งาน"
+    },
+    {
+      "id": "2026-04-09-session2",
+      "timestamp": "2026-04-09T13:30:00+07:00",
+      "date": "2026-04-09",
+      "title": "แก้ Face Crop จริง + คอมเมนต์ไทย",
+      "status": "completed",
+      "summary": "แก้ publish_cropped_face() ให้ครอปจริง, เพิ่ม padding 20%, เปลี่ยนคอมเมนต์ทั้งไฟล์เป็นภาษาไทย"
+    },
+    {
+      "id": "2026-04-09-session3",
+      "timestamp": "2026-04-09T14:45:00+07:00",
+      "date": "2026-04-09",
+      "title": "แก้ Face Crop ให้ส่งเฉพาะใบหน้าจริง",
+      "status": "in_progress",
+      "summary": "พบปัญหา img.crop() เป็นแค่เลือก ROI ไม่ได้ครอบจริง, เปลี่ยนไปใช้ image.Image() สร้างภาพใหม่จาก ROI"
+    },
+    {
+      "id": "2026-04-09-session4",
+      "timestamp": "2026-04-09T15:30:00+07:00",
+      "date": "2026-04-09",
+      "title": "แก้ Face Crop ด้วย numpy slicing + .copy()",
+      "status": "in_progress",
+      "summary": "พบว่า crop() เป็นแค่ ROI reference (roi_img ยัง 640x480), เปลี่ยนไปใช้ numpy slicing + .copy() + .tobytes() รอทดสอบ"
+    },
+    {
+      "id": "2026-04-09-session5",
+      "timestamp": "2026-04-09T16:00:00+07:00",
+      "date": "2026-04-09",
+      "title": "แก้ Face Crop ด้วย crop(tuple) + Save-Load",
+      "status": "in_progress",
+      "summary": "ค้นพบว่า K230 SDK ต้องการ tuple crop((x,y,w,h)), ใช้ Save-Load วิธี crop → save file → load → resize รอทดสอบ"
+    },
+    {
+      "id": "2026-04-09-session6",
+      "timestamp": "2026-04-09T17:00:00+07:00",
+      "date": "2026-04-09",
+      "title": "ค้นพบวิธี crop Official CanMV K230",
+      "status": "in_progress",
+      "summary": "ค้นพบวิธี official crop(x, y, w, h) 4 args, อัปเดต test_crop.py รอทดสอบภาพ"
+    },
+    {
+      "id": "2026-04-09-session7",
+      "timestamp": "2026-04-09T18:00:00+07:00",
+      "date": "2026-04-09",
+      "title": "K230 Face Crop - Direct Draw + 4 args crop()",
+      "status": "in_progress",
+      "summary": "สร้าง face_crop_universal.py ใช้ Direct Draw (sensor.snapshot dual channel), แก้ crop() เป็น 4 args แยก, เก็บครอบหน้าที่ /sdcard/crop_tests/"
+    }
+  ]
 }
