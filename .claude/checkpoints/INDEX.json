@@ -1,11 +1,18 @@
 {
   "days": [
     {
+      "day": "2026-04-10",
+      "last_update": "2026-04-10T11:00:00+07:00",
+      "title": "Face Crop SUCCESS + Checkpoint Refactor",
+      "status": "completed",
+      "summary": "K230 Face Crop สำเร็จด้วย Numpy Slicing Method! พร้อม refactor checkpoint เป็น day-based"
+    },
+    {
       "day": "2026-04-09",
       "last_update": "2026-04-09T19:30:00+07:00",
       "title": "K230 Face Crop Debug - ลองหลายวิธียังไม่สำเร็จ",
-      "status": "in_progress",
-      "summary": "ลองหลายวิธี (image.Image, numpy slicing, crop(tuple), crop(4args), Save-Load) แต่ยังครอปไม่ได้จริง ได้ภาพเต็มเสมอ"
+      "status": "completed",
+      "summary": "ลองหลายวิธี (image.Image, numpy slicing, crop(tuple), crop(4args), Save-Load) ในวันนี้ แต่ยังครอปไม่ได้จริง"
     }
   ]
 }
