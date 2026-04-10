@@ -1,0 +1,46 @@
+{
+  "id": "2026-04-09-session8",
+  "timestamp": "2026-04-09T19:30:00+07:00",
+  "date": "2026-04-09",
+  "working_directory": "J:\\CodeAgent\\my-oracle",
+  "is_git_repo": true,
+  "branch": "main",
+  "modified_files": [
+    "J:\\CodeAgent\\facericionition\\face_crop_universal.py"
+  ],
+  "untracked_files": [
+    "J:\\CodeAgent\\facericionition\\face_48187.jpg"
+  ],
+  "recent_commits": [
+    "d12f8c0 feat: implement session history management and enhance K230 Face Crop functionality",
+    "b910ada feat: enhance checkpoint and recap systems with session history management"
+  ],
+  "active_tasks": [],
+  "context": "เปลี่ยนวิธีครอปจาก Direct Draw → Save-Load Method (save รูปเต็ม → load → crop → save ครอป → ลบ temp). แก้ os.exists() → try-except, แก้ crop() → tuple format. ได้ภาพ face_48187.jpg แต่เป็นภาพเต็ม (ครอปไม่ได้จริง).",
+  "next_steps": [
+    "แก้ crop() ให้ครอปได้จริง — ตอนนี้ได้ภาพเต็มไม่ใช่ภาพหน้า",
+    "เช็ก print ROI size เพื่อ confirm ว่า crop ทำงานไหม"
+  ],
+  "title": "Face Crop Save-Load Method - ครอปไม่ได้จริง",
+  "status": "in_progress",
+  "pending": [
+    "แก้ crop() ไม่ได้ครอบเฉพาะหน้า — ยังได้ภาพเต็ม",
+    "หาวิธี crop ที่ถูกต้องสำหรับ image.Image() บน K230"
+  ],
+  "key_files": {
+    "primary": "J:\\CodeAgent\\facericionition\\face_crop_universal.py",
+    "output": "J:\\CodeAgent\\facericionition\\face_48187.jpg"
+  },
+  "settings": {
+    "display_mode": "st7701",
+    "resolution": "640x480",
+    "crop_dir": "/sdcard/crop_tests",
+    "save_interval": 60,
+    "mqtt_topic": "RCN/#"
+  },
+  "bugs_found": [
+    "os.exists() ไม่มีใน K230 MicroPython — แก้ด้วย try-except",
+    "crop(x1, y1, w, h) ต้องเป็น tuple crop((x1, y1, w, h))",
+    "crop() ยังไม่ได้ผล — ได้ภาพเต็มแทนภาพครอบหน้า"
+  ]
+}

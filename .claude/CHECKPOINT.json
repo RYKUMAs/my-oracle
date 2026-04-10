@@ -1,6 +1,6 @@
 {
-  "current_session_id": "2026-04-09-session7",
-  "timestamp": "2026-04-09T18:00:00+07:00",
+  "current_day": "2026-04-09",
+  "timestamp": "2026-04-09T19:30:00+07:00",
   "working_directory": "J:\\CodeAgent\\my-oracle",
   "is_git_repo": true,
   "branch": "main",
@@ -8,19 +8,19 @@
     "J:\\CodeAgent\\facericionition\\face_crop_universal.py"
   ],
   "untracked_files": [
-    ".claude/checkpoints/sessions/"
+    "J:\\CodeAgent\\facericionition\\face_48187.jpg"
   ],
   "recent_commits": [
-    "b910ada feat: enhance checkpoint and recap systems with session history management",
-    "f4f1bab feat: update CHECKPOINT.json to reflect session completion",
-    "9bb7f7f feat: update CHECKPOINT.json for K230 Auto Green Box"
+    "d12f8c0 feat: implement session history management and enhance K230 Face Crop functionality",
+    "b910ada feat: enhance checkpoint and recap systems with session history management"
   ],
   "active_tasks": [],
-  "context": "📸 K230 Face Crop - Direct Draw Mode\n\n**ไฟล์หลัก:** `face_crop_universal.py`\n\n**สิ่งที่ทำ:**\n1. สร้างไฟล์ single file สำหรับ K230 Face Detection + Crop\n2. ใช้ Direct Draw (เหมือน main.py) — sensor.snapshot() dual channel\n3. แก้ crop() จาก tuple → 4 args แยก: `crop(x1, y1, w, h)`\n\n**Dual Channel:**\n- CHN_0: Display (RGB888) สำหรับ UI\n- CHN_2: AI (RGBP888) สำหรับประมวลผล\n\n**เก็บไฟล์:**\n- `/sdcard/crop_tests/face_xxxxx.jpg` — ครอบเฉพาะหน้า\n\n**Fix ล่าสุด:**\n```python\n# เก่า (ผิด)\nroi_img = img_display.crop((x1, y1, w, h))\n\n# ใหม่ (ถูก)\nroi_img = img_display.crop(x1, y1, w, h)\n```",
+  "context": "📸 Face Crop Save-Load Method — ครอปไม่ได้จริง\n\n**ไฟล์หลัก:** `face_crop_universal.py`\n\n**สิ่งที่ทำ:**\n1. เปลี่ยนจาก Direct Draw → Save-Load Method\n2. Save รูปเต็ม → Load → Crop → Save ครอป → ลบ temp\n3. แก้ os.exists() → try-except (K230 ไม่มีฟังก์ชันนี้)\n4. แก้ crop() → tuple format: crop((x1, y1, w, h))\n\n**ปัญหา:**\n- ได้ภาพ face_48187.jpg แต่เป็น **ภาพเต็ม** ไม่ใช่ภาพครอบหน้า\n- crop() ยังไม่ได้ผลจริง\n\n**Settings:**\n- Interval: 60 frames (~2 วินาที)\n- MQTT Topic: RCN/#\n- Crop dir: /sdcard/crop_tests",
   "next_steps": [
-    "ทดสอบ face_crop_universal.py บน K230",
-    "ยืนยันว่าได้ภาพครอบหน้าไม่ใช่ภาพเต็ม"
+    "แก้ crop() ให้ครอบได้จริง — ตอนนี้ได้ภาพเต็ม",
+    "เช็ก print ROI size เพื่อ confirm",
+    "ลองวิธี crop อื่น ถ้า tuple format ไม่ได้ผล"
   ],
   "oracle_version": "v3.5",
-  "session_type": "k230_face_crop_direct_draw"
+  "session_type": "k230_face_crop_saveload_debug"
 }
