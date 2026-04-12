@@ -9,7 +9,9 @@
       "mcp__zread__search_doc",
       "mcp__zread__get_repo_structure",
       "Bash(dir J:\\\\CodeAgent\\\\facericionition\\\\examples\\\\12-Image-Filters:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(rm:*)",
+      "mcp__zai-mcp-server__analyze_image"
     ]
   }
 }
