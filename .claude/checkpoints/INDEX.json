@@ -1,6 +1,13 @@
 {
   "days": [
     {
+      "day": "2026-04-14",
+      "last_update": "2026-04-14T19:00:00+07:00",
+      "title": "Arduino Teaching — Level 3 Functions",
+      "status": "in_progress",
+      "summary": "สอน Arduino แบบ Systematic ผ่าน Level 1-2 แล้ว (LED Blink, Variables, Loops, SOS Signal)"
+    },
+    {
       "day": "2026-04-10",
       "last_update": "2026-04-10T12:00:00+07:00",
       "title": "Face Crop SUCCESS + Update main.py หลัก",
